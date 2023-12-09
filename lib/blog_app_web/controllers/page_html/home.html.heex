@@ -1,30 +1,38 @@
 <.flash_group flash={@flash} />
 
-<section class="m-6 flex gap-4 px-80 text-teal-800 font-serif">
-  <div class="text-3xl flex flex-row items-center gap-4">
-    <img src={~s"./images/stew.jpg"} alt="" class=" w-28 h-28 rounded-full">
-    <p>Blog</p>
 
-    <span class="material-symbols-outlined ms-20 md:hidden"> reorder </span>
-  </div>
+  
+  <section  x-data="{open: true}" class="m-6 lg:flex lg:flex-row flex flex-col justify-between items-center gap-4 lg:px-80 text-teal-800 font-serif">
+    <div class="text-3xl flex flex-row justify-between items-center gap-4">
+      <img src={~s"./images/stew.jpg"} alt="" class=" w-28 h-28 rounded-full">
+      <p>Blog</p>
+      
+      <div class=" lg:hidden  ">
+      <span @click ="open = !open" type="button" class="material-symbols-outlined  cursor-pointer "> reorder </span>
+    </div>
+    </div>
 
   <ul
-    class="lg:flex flex-1 space-x-6 justify-end align-middle items-center text-3xl hidden"
-  >
+  x-show="open"
+  class="lg:flex lg:flex-row flex-1 space-x-6 justify-end align-middle lg:items-center text-3xl   p-4 flex flex-col items-center flex-wrap"
+>
     <li>Art</li>
     <li>Science</li>
     <li>Technology</li>
     <li>Music</li>
     <li>Art</li>
+    <li>Design</li>
+    <li>Cinema</li>
+    <li>Login</li>
     <li class="hover:border-b-2  hover:border-b-fuchsia-800">Create</li>
   </ul>
 </section>
 
 <section>
   <div class="flex flex-col  lg:px-96 gap-4  lg:mb-10">
-      <div class="flex  justify-center flex-row-reverse flex-wrap   gap-40">
-        <img src={~s"./images/stew.jpg"}  alt="" class="rounded-lg bg-teal-600 shadow-lg relative place-content-center  after:content[''] after:absolute after:bg-teal-900 after:w-fit after:index-40  after:-left-8  top-4" >
-      <div class="  flex flex-col justify-start  items-center  whitespace-pre-wrap text-3xl  "  >
+    <div class="flex  justify-center flex-row-reverse flex-wrap   gap-40 mb-20">
+      <img src={~s"./images/stew.jpg"}  alt="" class="rounded-lg bg-teal-600 border-b-2 border-b-slate-900  box-border shadow-lg m-4  " >
+      <div class="flex flex-col justify-start  items-center  whitespace-pre-wrap text-xl border p-6 shadow-lg "  >
         <p class="text-red-500 uppercase cursor-pointer" >why is junk bad for your heal i say</p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
         similique odio deserunt molestias ex! Ex eos laudantium, incidunt illo
@@ -34,20 +42,26 @@
         fugiat. Nam neque perspiciatis dolores quasi recusandae molestiae
         incidunt voluptatem accusamus, blanditiis mollitia id dicta, voluptates
         quaerat illum? Quis assumenda commodi illum! Repudiandae.
-
+        
         <button>
           <a class="border p-4 border-fuchsia-800 border-t-4 hover:bg-fuchsia-800  " href={~s"./blog/1"}>Read More</a>
         </button>
       </div>
-    
+      
     
     </div>
 
-    <div class="flex justify-center items-center flex-wrap mt-20 ">
-      <img src={~s"./images/stew.jpg"}  alt="" class="rounded-lg">
-      <div class="  flex flex-col   justify-center items-center  text-3xl  whitespace-pre-wrap " >
-        <p class="text-red-500 uppercase cursor-pointer" >why is junk bad for your heal i say</p>
+    <div class="flex justify-center items-center flex-wrap mt-20 gap-40 mb-10 ">
+      <img src={~s"./images/stew.jpg"}  alt="" class="rounded-lg bg-teal-600 border-b-2 border-b-slate-900  box-border shadow-lg relative place-content-center   " >
+      <div class="  flex flex-col   justify-center items-center  text-xl  whitespace-pre-wrap overflow-clip truncate border p-6 shadow-lg" >
+        <p class="text-red-500 uppercase cursor-pointer" >Describing the dish  for the audience </p>
 
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
+        similique odio deserunt molestias ex! Ex eos laudantium, incidunt illo
+        dignissimos repellat dolore qui nesciunt expedita cupiditate rerum
+        fugiat. Nam neque perspiciatis dolores quasi recusandae molestiae
+        incidunt voluptatem accusamus, blanditiis mollitia id dicta, voluptates
+        quaerat illum? Quis assumenda commodi illum! Repudiandae.
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
         similique odio deserunt molestias ex! Ex eos laudantium, incidunt illo
         dignissimos repellat dolore qui nesciunt expedita cupiditate rerum
@@ -58,7 +72,7 @@
 
       </div>
     </div>
-    </div>
+  </div>
 </section>
 
 
@@ -66,7 +80,7 @@
 
 <footer class="bg-white dark:bg-gray-900">
   <div class="mx-auto w-full max-w-screen-xl">
-    <div class="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
+    <div class="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-3">
       <div>
           <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Company</h2>
           <ul class="text-gray-500 dark:text-gray-400 font-medium">
@@ -80,21 +94,21 @@
                   <a href="#" class="hover:underline">Brand Center</a>
               </li>
               <li class="mb-4">
-                  <a href="#" class="hover:underline">Blog</a>
+                <a href="#" class="hover:underline">Blogs</a>
               </li>
           </ul>
       </div>
       <div>
-          <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Help center</h2>
+        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Help center</h2>
           <ul class="text-gray-500 dark:text-gray-400 font-medium">
               <li class="mb-4">
                   <a href="#" class="hover:underline">Discord Server</a>
               </li>
               <li class="mb-4">
-                  <a href="#" class="hover:underline">Twitter</a>
+                <a href="#" class="hover:underline">Twitter</a>
               </li>
               <li class="mb-4">
-                  <a href="#" class="hover:underline">Facebook</a>
+                <a href="#" class="hover:underline">Facebook</a>
               </li>
               <li class="mb-4">
                   <a href="#" class="hover:underline">Contact Us</a>
@@ -115,23 +129,7 @@
               </li>
           </ul>
       </div>
-      <div>
-          <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Download</h2>
-          <ul class="text-gray-500 dark:text-gray-400 font-medium">
-              <li class="mb-4">
-                  <a href="#" class="hover:underline">iOS</a>
-              </li>
-              <li class="mb-4">
-                  <a href="#" class="hover:underline">Android</a>
-              </li>
-              <li class="mb-4">
-                  <a href="#" class="hover:underline">Windows</a>
-              </li>
-              <li class="mb-4">
-                  <a href="#" class="hover:underline">MacOS</a>
-              </li>
-          </ul>
-      </div>
+     
   </div>
   <div class="px-4 py-6 bg-gray-100 dark:bg-gray-700 md:flex md:items-center md:justify-between">
       <span class="text-sm text-gray-500 dark:text-gray-300 sm:text-center">© <%=DateTime.utc_now.year() %> <a href="#">BlogApp</a>. All Rights Reserved.

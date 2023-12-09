@@ -24,7 +24,8 @@ defmodule BlogAppWeb.Router do
   scope "/live", BlogAppWeb do
     pipe_through :browser
 
-    live( "/", LandingPageLive, :index)
+    live( "/landing", LandingPage.LandingPageLive, :index)
+    live( "/create", Create.WriteLive, :index)
   end
   # Other scopes may use custom stacks.
   # scope "/api", BlogAppWeb do

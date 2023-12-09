@@ -1,4 +1,4 @@
-defmodule BlogAppWeb.LandingPageLive do
+defmodule BlogAppWeb.LandingPage.LandingPageLive do
   use BlogAppWeb, :live_view
 
   def mount(_params, _session, socket) do
