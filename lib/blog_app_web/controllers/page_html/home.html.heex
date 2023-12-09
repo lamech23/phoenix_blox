@@ -5,7 +5,7 @@
     <img src={~s"./images/stew.jpg"} alt="" class=" w-28 h-28 rounded-full">
     <p>Blog</p>
 
-    <span class="material-symbols-outlined ms-20 lg:hidden"> reorder </span>
+    <span class="material-symbols-outlined ms-20 md:hidden"> reorder </span>
   </div>
 
   <ul
@@ -16,16 +16,16 @@
     <li>Technology</li>
     <li>Music</li>
     <li>Art</li>
+    <li class="hover:border-b-2  hover:border-b-fuchsia-800">Create</li>
   </ul>
 </section>
 
 <section>
-  <div class="flex flex-col gap-4  lg:mb-10">
-    <div class="flex flex-col  items-center  gap-4 mt-20 ">
-      <div class="flex flex-row-reverse gap-40">
-
-      <img src={~s"./images/stew.jpg"} width="80%" alt="" class="">
-      <div class="  flex justify-center items-center text-center whitespace-pre-wrap text-3xl  "  >
+  <div class="flex flex-col  lg:px-96 gap-4  lg:mb-10">
+      <div class="flex  justify-center flex-row-reverse flex-wrap   gap-40">
+        <img src={~s"./images/stew.jpg"}  alt="" class="rounded-lg bg-teal-600 shadow-lg relative place-content-center  after:content[''] after:absolute after:bg-teal-900 after:w-fit after:index-40  after:-left-8  top-4" >
+      <div class="  flex flex-col justify-start  items-center  whitespace-pre-wrap text-3xl  "  >
+        <p class="text-red-500 uppercase cursor-pointer" >why is junk bad for your heal i say</p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
         similique odio deserunt molestias ex! Ex eos laudantium, incidunt illo
         similique odio deserunt molestias ex! Ex eos laudantium, incidunt illo
@@ -34,24 +34,31 @@
         fugiat. Nam neque perspiciatis dolores quasi recusandae molestiae
         incidunt voluptatem accusamus, blanditiis mollitia id dicta, voluptates
         quaerat illum? Quis assumenda commodi illum! Repudiandae.
+
+        <button>
+          <a class="border p-4 border-fuchsia-800 border-t-4 hover:bg-fuchsia-800  " href={~s"./blog/1"}>Read More</a>
+        </button>
       </div>
     
     
     </div>
 
-    <div class="flex  mt-20 ">
-      <img src={~s"./images/stew.jpg"} width="80%" alt="" class="">
-      <div class="  flex    justify-center items-center text-center text-3xl  whitespace-pre-wrap " >
+    <div class="flex justify-center items-center flex-wrap mt-20 ">
+      <img src={~s"./images/stew.jpg"}  alt="" class="rounded-lg">
+      <div class="  flex flex-col   justify-center items-center  text-3xl  whitespace-pre-wrap " >
+        <p class="text-red-500 uppercase cursor-pointer" >why is junk bad for your heal i say</p>
+
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
         similique odio deserunt molestias ex! Ex eos laudantium, incidunt illo
         dignissimos repellat dolore qui nesciunt expedita cupiditate rerum
         fugiat. Nam neque perspiciatis dolores quasi recusandae molestiae
         incidunt voluptatem accusamus, blanditiis mollitia id dicta, voluptates
         quaerat illum? Quis assumenda commodi illum! Repudiandae.
+        <a class="border p-4 border-fuchsia-800 border-t-4 hover:bg-fuchsia-800  " href={~s"./blog/1"}>Read More</a>
+
       </div>
     </div>
     </div>
-  </div>
 </section>
 
 
