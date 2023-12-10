@@ -2,7 +2,9 @@
   
   <section  x-data="{open: true}" class="m-6 lg:flex lg:flex-row flex flex-col justify-between items-center gap-4 lg:px-80 text-teal-800 font-serif">
     <div class="text-3xl flex flex-row justify-between items-center gap-4">
+      <.link navigate={~p"/live/landing"}>
       <img src={~s"/images/stew.jpg"} alt="" class=" w-28 h-28 rounded-full">
+    </.link>
       <p>Blog</p>
       
       <div class=" lg:hidden  ">
@@ -21,10 +23,13 @@
     <li>Art</li>
     <li>Design</li>
     <li>Cinema</li>
-    <li>Login</li>
+    <.link navigate={~p"/live/login"} class="hover:border-b-2  hover:border-b-fuchsia-800">login</.link>
+
     <.link navigate={~p"/live/create"} class="hover:border-b-2  hover:border-b-fuchsia-800">Create</.link>
   </ul>
 </section>
+
+
 <main class="px-4 py-20 sm:px-6 lg:px-8">
   <div class="mx-auto  max-w-full">
     <.flash_group flash={@flash} />
