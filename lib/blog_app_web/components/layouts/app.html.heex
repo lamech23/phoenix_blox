@@ -1,31 +1,32 @@
-<header class="px-4 sm:px-6 lg:px-8">
-  <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm">
-    <div class="flex items-center gap-4">
-      <a href="/">
-        <img src={~p"/images/logo.svg"} width="36" />
-      </a>
-      <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
-        v<%= Application.spec(:phoenix, :vsn) %>
-      </p>
+
+  
+  <section  x-data="{open: true}" class="m-6 lg:flex lg:flex-row flex flex-col justify-between items-center gap-4 lg:px-80 text-teal-800 font-serif">
+    <div class="text-3xl flex flex-row justify-between items-center gap-4">
+      <img src={~s"/images/stew.jpg"} alt="" class=" w-28 h-28 rounded-full">
+      <p>Blog</p>
+      
+      <div class=" lg:hidden  ">
+      <span @click ="open = !open" type="button" class="material-symbols-outlined  cursor-pointer "> reorder </span>
     </div>
-    <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
-      <a href="https://twitter.com/elixirphoenix" class="hover:text-zinc-700">
-        @elixirphoenix
-      </a>
-      <a href="https://github.com/phoenixframework/phoenix" class="hover:text-zinc-700">
-        GitHub
-      </a>
-      <a
-        href="https://hexdocs.pm/phoenix/overview.html"
-        class="rounded-lg bg-zinc-100 px-2 py-1 hover:bg-zinc-200/80"
-      >
-        Get Started <span aria-hidden="true">&rarr;</span>
-      </a>
     </div>
-  </div>
-</header>
+
+  <ul
+  x-show="open"
+  class="lg:flex lg:flex-row flex-1 space-x-6 justify-end align-middle lg:items-center text-3xl   p-4 flex flex-col items-center flex-wrap"
+>
+    <li>Art</li>
+    <li>Science</li>
+    <li>Technology</li>
+    <li>Music</li>
+    <li>Art</li>
+    <li>Design</li>
+    <li>Cinema</li>
+    <li>Login</li>
+    <.link navigate={~p"/live/create"} class="hover:border-b-2  hover:border-b-fuchsia-800">Create</.link>
+  </ul>
+</section>
 <main class="px-4 py-20 sm:px-6 lg:px-8">
-  <div class="mx-auto max-w-2xl">
+  <div class="mx-auto  max-w-full">
     <.flash_group flash={@flash} />
     <%= @inner_content %>
   </div>

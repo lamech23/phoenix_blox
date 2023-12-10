@@ -26,6 +26,7 @@ defmodule BlogAppWeb.Router do
 
     live( "/landing", LandingPage.LandingPageLive, :index)
     live( "/create", Create.WriteLive, :index)
+    live( "/single", SinglePage.SinglePageLive, :index)
   end
   # Other scopes may use custom stacks.
   # scope "/api", BlogAppWeb do
