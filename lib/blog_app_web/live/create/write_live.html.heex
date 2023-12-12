@@ -1,16 +1,13 @@
- <section 
 
- >
-
- 
  <.simple_form
   :let={f} 
+  for={@form}
   id="post_form"
   phx-submit="save"
- class=" lg:flex-row flex-wrap gap-8 justify-center items-center lg:mt-10"
 
  >
-  <div class="w-1/2 flex flex-col gap-8 p-4">
+ <section class="  lg:flex lg:flex-row flex-wrap gap-8 justify-center items-center lg:mt-10 ">
+  <div class="w-1/2 h-full flex flex-col gap-8 p-4 shadow-lg">
     <.input 
     field={f[:title]}
       type="text"
@@ -18,28 +15,30 @@
       id="large-input "
       placeholder=" title"
     />
+    
     <.input
-      class="block w-full lg:h-64 shadow-lg bg-teal-400 rounded-lg p-4 text-2xl"
+    class="block w-full lg:h-64 shadow-lg bg-teal-400 rounded-lg p-4 text-2xl"
     field={f[:desc]}
-    type="text"
+    type="textarea"
       placeholder=""
     ></.input>
   </div>
 
-  <div class="flex flex-col gap-8 w-1/2 lg:w-2/12 p-4">
+  <div class="flex flex-col  gap-8 w-1/2 lg:w-2/12 p-4">
     <div class="border-2 p-4 shadow-lg">
       <button type="submit" class="text-2xl text-red-400 mb-4" phx-submit="save">publish</button>
       <.input 
-      field={f[:file]} class="hidden" 
-      
+      field={f[:file]} 
       label="file"
-      type="file" id="file" />
+      type="file" 
+      id="file" 
+      />
     </div>
 
     <div class="border-2 p-4 space-x-2 shadow-lg">
       <p class="text-2xl text-red-400 underline mb-4">category</p>
 
-      <div class="cat">
+      <div class="w-6">
         <.input 
         field={f[:cat]} 
         label="art"
@@ -49,7 +48,7 @@
          
       </div>
 
-      <div class="cat">
+      <div class="w-6">
         <.input 
         field={f[:cat]}
          
@@ -61,7 +60,7 @@
           
       </div>
 
-      <div class="cat">
+      <div class="w-6">
         <.input 
         field={f[:cat]} 
         label="technology"
@@ -71,7 +70,7 @@
          />
         
       </div>
-      <div class="cat">
+      <div class="w-6">
         <.input 
         field={f[:cat]} 
         label="food"
@@ -80,7 +79,7 @@
          value="food"
         />
       </div>
-      <div class="cat">
+      <div class="w-6">
         <.input 
         field={f[:cat]} 
         label="design"
@@ -89,7 +88,7 @@
          value="design"
          />
       </div>
-      <div class="cat">
+      <div class="w-6">
         <.input 
         field={f[:cat]} 
         label="music"
@@ -100,5 +99,5 @@
       </div>
     </div>
   </div>
-</.simple_form>
 </section>
+</.simple_form>

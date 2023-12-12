@@ -1,48 +1,24 @@
 
 <section>
     <div class="flex flex-col  lg:px-96 gap-4  lg:mb-10">
-      <div class="flex  justify-center flex-row-reverse flex-wrap   gap-40 mb-20">
-        <img src={~s"/images/stew.jpg"}  alt="" class="rounded-lg bg-teal-600 border-b-2 border-b-slate-900  box-border shadow-lg m-4  " >
-        <div class="flex flex-col justify-start  items-center  whitespace-pre-wrap text-xl border p-6 shadow-lg "  >
-          <p class="text-red-500 uppercase cursor-pointer" >why is junk bad for your heal i say</p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
-          similique odio deserunt molestias ex! Ex eos laudantium, incidunt illo
-          similique odio deserunt molestias ex! Ex eos laudantium, incidunt illo
-          similique odio deserunt molestias ex! Ex eos laudantium, incidunt illo
-          dignissimos repellat dolore qui nesciunt expedita cupiditate rerum
-          fugiat. Nam neque perspiciatis dolores quasi recusandae molestiae
-          incidunt voluptatem accusamus, blanditiis mollitia id dicta, voluptates
-          quaerat illum? Quis assumenda commodi illum! Repudiandae.
+
+      <%= for blog  <- @blogs do %>
+      <div class="flex   justify-center odd:flex-row-reverse flex-wrap   gap-40 mb-20">
+        <img src={~s"/images/stew.jpg"}  alt="" class="rounded-lg bg-teal-600 border-b-2 border-b-slate-900   shadow-lg m-4  " >
+        <div class="flex flex-col justify-start  items-center  whitespace-pre-wrap text-xl  w-1/4 border p-6 shadow-lg "  >
+          <p class="text-red-500 uppercase cursor-pointer" ><%= blog.title %></p>
+          <p class="h-80 overflow-scroll indent-14 leading-6"><%= blog.desc %></p>
+        
           
-          <button>
+          <button class="mt-8">
             <a class="border p-4 border-fuchsia-800 border-t-4 hover:bg-fuchsia-800  " href={~s"./blog/1"}>Read More</a>
           </button>
         </div>
         
       
       </div>
+      <% end %>
   
-      <div class="flex justify-center items-center flex-wrap mt-20 gap-40 mb-10 ">
-        <img src={~s"/images/stew.jpg"}  alt="" class="rounded-lg bg-teal-600 border-b-2 border-b-slate-900  box-border shadow-lg relative place-content-center   " >
-        <div class="  flex flex-col   justify-center items-center  text-xl  whitespace-pre-wrap overflow-clip truncate border p-6 shadow-lg" >
-          <p class="text-red-500 uppercase cursor-pointer" >Describing the dish  for the audience </p>
-  
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
-          similique odio deserunt molestias ex! Ex eos laudantium, incidunt illo
-          dignissimos repellat dolore qui nesciunt expedita cupiditate rerum
-          fugiat. Nam neque perspiciatis dolores quasi recusandae molestiae
-          incidunt voluptatem accusamus, blanditiis mollitia id dicta, voluptates
-          quaerat illum? Quis assumenda commodi illum! Repudiandae.
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
-          similique odio deserunt molestias ex! Ex eos laudantium, incidunt illo
-          dignissimos repellat dolore qui nesciunt expedita cupiditate rerum
-          fugiat. Nam neque perspiciatis dolores quasi recusandae molestiae
-          incidunt voluptatem accusamus, blanditiis mollitia id dicta, voluptates
-          quaerat illum? Quis assumenda commodi illum! Repudiandae.
-          <a class="border p-4 border-fuchsia-800 border-t-4 hover:bg-fuchsia-800  " href={~s"./blog/1"}>Read More</a>
-  
-        </div>
-      </div>
     </div>
   </section>
   

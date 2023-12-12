@@ -1,6 +1,7 @@
 defmodule BlogApp.Post do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
   @type t :: %__MODULE__{cat: String.t(), desc: String.t(), title: String.t()}
   alias BlogApp.Repo
 
@@ -32,11 +33,20 @@ defmodule BlogApp.Post do
     |> changeset(params)
     |> Repo.update()
   end
+# this gets all the posts else with the specific category
+  def list_posts() do
+    query = from w in __MODULE__, order_by: [asc: :inserted_at]
+    # query =
+    #   if cat do
+    #     where(query, [w], w.cat == ^cat)
+    #   else
+    #     query
+    #   end
 
-
-  def change_tariff(%__MODULE__{} = tariff, attrs \\ %{}) do
-    changeset(tariff, attrs)
+    Repo.all(query)
   end
 
-
+  def change_post(%__MODULE__{} = tariff, attrs \\ %{}) do
+    changeset(tariff, attrs)
+  end
 end

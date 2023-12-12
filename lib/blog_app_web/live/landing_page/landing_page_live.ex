@@ -1,8 +1,10 @@
 defmodule BlogAppWeb.LandingPage.LandingPageLive do
   use BlogAppWeb, :live_view
+  alias BlogApp.Post
 
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    posts = Post.list_posts()
+    {:ok, assign(socket, blogs: posts )}
   end
 
 
