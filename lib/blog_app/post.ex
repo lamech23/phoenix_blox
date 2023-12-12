@@ -2,6 +2,7 @@ defmodule BlogApp.Post do
   use Ecto.Schema
   import Ecto.Changeset
   @type t :: %__MODULE__{cat: String.t(), desc: String.t(), title: String.t()}
+  alias BlogApp.Repo
 
   schema "posts" do
     field :cat, :string
