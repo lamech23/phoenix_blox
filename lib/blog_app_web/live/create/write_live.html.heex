@@ -21,17 +21,17 @@
     field={f[:desc]}
     type="textarea"
       placeholder=""
-    ></.input>
+    >
+  </.input>
   </div>
 
   <div class="flex flex-col  gap-8 w-1/2 lg:w-2/12 p-4">
     <div class="border-2 p-4 shadow-lg">
-      <button type="submit" class="text-2xl text-red-400 mb-4" phx-submit="save">publish</button>
+      <button type="submit" class="text-2xl border p-3 border-t-2 border-t-fuchsia-800 hover:bg-fuchsia-00 text-teal-400 mb-4" phx-submit="save">publish</button>
       <.input 
-      field={f[:file]} 
-      label="file"
       type="file" 
-      id="file" 
+      field={f[:file]} 
+      multipart
       />
     </div>
 

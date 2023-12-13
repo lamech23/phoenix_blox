@@ -9,6 +9,7 @@ defmodule BlogApp.Post do
     field :cat, :string
     field :desc, :string
     field :title, :string
+    field :file, :string
 
     timestamps(type: :utc_datetime)
   end
@@ -34,7 +35,7 @@ defmodule BlogApp.Post do
     |> Repo.update()
   end
 # this gets all the posts else with the specific category
-  def list_posts() do
+  def list_posts(cat \\ nil) do
     query = from w in __MODULE__, order_by: [asc: :inserted_at]
     # query =
     #   if cat do

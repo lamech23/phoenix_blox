@@ -6,6 +6,7 @@ defmodule BlogApp.Repo.Migrations.CreatePosts do
       add :title, :string
       add :desc, :text
       add :cat, :string
+      add :file, :string
 
       timestamps(type: :utc_datetime)
     end

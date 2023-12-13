@@ -6,10 +6,8 @@
       <div class="flex   justify-center odd:flex-row-reverse flex-wrap   gap-40 mb-20">
         <img src={~s"/images/stew.jpg"}  alt="" class="rounded-lg bg-teal-600 border-b-2 border-b-slate-900   shadow-lg m-4  " >
         <div class="flex flex-col justify-start  items-center  whitespace-pre-wrap text-xl  w-1/4 border p-6 shadow-lg "  >
-          <p class="text-red-500 uppercase cursor-pointer" ><%= blog.title %></p>
-          <p class="h-80 overflow-scroll indent-14 leading-6"><%= blog.desc %></p>
-        
-          
+          <p class="text-red-500 uppercase cursor-pointer text-3xl underline" ><%= blog.title %></p>
+          <p class="h-80 overflow-scroll indent-14 leading-6 mt-4 text-2xl"><%= blog.desc %></p>
           <button class="mt-8">
             <a class="border p-4 border-fuchsia-800 border-t-4 hover:bg-fuchsia-800  " href={~s"./blog/1"}>Read More</a>
           </button>

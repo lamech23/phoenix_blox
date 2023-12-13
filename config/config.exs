@@ -52,6 +52,15 @@ config :tailwind,
     ),
     cd: Path.expand("../assets", __DIR__)
   ]
+#arc configuaration 
+  config :arc,
+  storage: Arc.Storage.Local,
+
+  uploads: [
+    storage: Arc.Storage.Local,
+    path: "uploads",
+    prefix: "uploads/#{Application.get_env(:blog_app, BlogApp.Endpoint)[:url][:path]}"
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,
