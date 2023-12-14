@@ -47,6 +47,9 @@ defmodule BlogApp.Post do
     Repo.all(query)
   end
 
+  def get_post!(id), do: Repo.get!(__MODULE__, id)
+
+
   def change_post(%__MODULE__{} = tariff, attrs \\ %{}) do
     changeset(tariff, attrs)
   end

@@ -25,7 +25,7 @@ defmodule BlogAppWeb.Router do
     pipe_through :browser
 
     live( "/landing", LandingPage.LandingPageLive, :index)
-    live( "/create", Create.WriteLive, :index)
+    live( "/create", Create.WriteLive, :new)
     live( "/single", SinglePage.SinglePageLive, :index)
     live( "/login", Logs.LoginLive, :index)
   end

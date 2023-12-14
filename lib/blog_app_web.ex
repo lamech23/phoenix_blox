@@ -54,6 +54,8 @@ defmodule BlogAppWeb do
       use Phoenix.LiveView,
         layout: {BlogAppWeb.Layouts, :app}
 
+      
+
       unquote(html_helpers())
     end
   end

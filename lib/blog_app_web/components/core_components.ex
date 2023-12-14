@@ -441,6 +441,40 @@ defmodule BlogAppWeb.CoreComponents do
     """
   end
 
+
+
+  @doc """
+  Renders a page header with title and subtitle.
+  """
+  attr(:class, :string, default: nil)
+  slot(:inner_block, required: true)
+  slot(:overview)
+  slot(:page_title)
+  slot(:subtitle)
+  slot(:actions)
+
+  def page_header(assigns) do
+    ~H"""
+    <div class=" sm:text-center pb-6 mt-4 border-b border-gray-200 sm:mt-0 sm:pt-1 ">
+      <p :if={@overview != []} class="text-xl font-medium tracking-wide text-gray-500 uppercase">
+        <%= render_slot(@overview) %>
+      </p>
+      <p :if={@page_title != []} class="text-2xl font-semibold text-gray-700 sm:text-2xl">
+        <%= render_slot(@page_title) %>
+      </p>
+      
+      <div class="mb-0 -mt-1 sm:flex sm:items-center">
+        <div class="sm:flex-auto">
+          <p :if={@subtitle} class="text-sm text-gray-400"><%= render_slot(@subtitle) %></p>
+        </div>
+        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+          <%= render_slot(@actions) %>
+        </div>
+      </div>
+    </div>
+    """
+  end  
+
   @doc ~S"""
   Renders a table with generic styling.
 
