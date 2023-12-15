@@ -31,7 +31,14 @@
     <div class="flex flex-col justify-center items-center gap-10 ">
 
         <div class="flex flex-col  justify-start items-start gap-20 ">
+            
             <%= for blogs <-@related  do %>
+
+            <%= if @blog.id == blogs.id do %>
+            
+
+            <% else %>
+
             <img src={~s"/images/stew.jpg"} class="w-96" alt="">
             
             <p> <%= blogs.title %></p>
@@ -39,6 +46,7 @@
             <button>
                 <.link class="border p-3 border-fuchsia-800 border-t-4 hover:bg-fuchsia-800  " navigate={~p"/live/#{blogs.id}/single/?cat=#{blogs.cat}"}>Read More</.link>
             </button>
+            <% end %>
             <% end %>
         </div>
 
