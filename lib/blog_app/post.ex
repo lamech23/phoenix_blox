@@ -40,7 +40,7 @@ defmodule BlogApp.Post do
     query = from p in __MODULE__, order_by: [desc: :inserted_at]
     query =
       if cat do
-        where(query, [w], w.cat == ^cat)
+        where(query, [w], w.cat == ^cat) 
       else
         query
       end

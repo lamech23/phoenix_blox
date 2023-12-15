@@ -9,7 +9,7 @@
           <p class="text-red-500 uppercase cursor-pointer text-3xl underline" ><%= blog.title %></p>
           <p class="h-80 overflow-scroll indent-14 leading-6 mt-4 text-2xl"><%= blog.desc %></p>
           <button class="mt-8">
-            <a class="border p-4 border-fuchsia-800 border-t-4 hover:bg-fuchsia-800  " href={"/live/#{blog.id}/single"}>Read More</a>
+            <.link class="border p-4 border-fuchsia-800 border-t-4 hover:bg-fuchsia-800  " navigate={~p"/live/#{blog.id}/single/?cat=#{blog.cat}"}>Read More</.link>
           </button>
         </div>
         
