@@ -26,7 +26,7 @@ defmodule BlogAppWeb.Router do
 
     live( "/landing", LandingPage.LandingPageLive, :index)
     live( "/create", Create.WriteLive, :new)
-    live( "/single", SinglePage.SinglePageLive, :index)
+    live( "/:id/single", SinglePage.SinglePageLive, :index)
     live( "/login", Logs.LoginLive, :index)
   end
   # Other scopes may use custom stacks.

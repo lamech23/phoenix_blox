@@ -7,31 +7,30 @@ defmodule BlogAppWeb.Create.WriteLive do
     changeset = Post.change_post(%Post{})
 
     socket = assign(socket, :form, to_form(changeset))
-    {:ok,
-     socket 
-     #|> allow_upload(:photo, accept: ~w(.jpg .jpeg .webp), max_entries: 2, auto_upload: true)
+
+    {
+      :ok,
+      socket 
+      # |> allow_upload(:photo, accept: ~w(.jpg .jpeg .webp), max_entries: 2, auto_upload: true)
     }
   end
-
 
   def handle_params(params, _uri, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
   def handle_event("save", post_params, socket) do
-    save_post(socket, socket.assigns.action, post_params)
+    save_post(socket, socket.assigns.live_action, post_params)
   end
 
-  defp save_post(socket, :new, post_params ) do
- 
+  defp save_post(socket, :new, post_params) do
     case Post.create(post_params) do
       {:ok, _post} ->
-      
         {:noreply,
-        socket
-        |> put_flash(:info, "post created succesfully")
-        |> redirect(to: "/live/landing")}
-     
+         socket
+         |> put_flash(:info, "post created succesfully")
+         |> redirect(to: "/live/landing")}
+
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
     end
@@ -40,7 +39,6 @@ defmodule BlogAppWeb.Create.WriteLive do
   defp save_post(socket, :edit, post_params) do
     case Post.update(socket.assigns.post, post_params) do
       {:ok, post} ->
-
         {:noreply,
          socket
          |> put_flash(:info, "Updated successfully")
@@ -58,8 +56,7 @@ defmodule BlogAppWeb.Create.WriteLive do
 
   # validate 
 
-
-  def handle_event("validate",  post_params, socket) do
+  def handle_event("validate", post_params, socket) do
     changeset =
       socket.assigns.post
       |> Post.changeset(post_params)
@@ -67,10 +64,10 @@ defmodule BlogAppWeb.Create.WriteLive do
 
     {:noreply, assign(socket, changeset: changeset)}
   end
- 
 
   defp apply_action(socket, :new, _params) do
     changeset = Post.change_post(%Post{})
+
     socket
     |> assign(:page_title, "Publish")
     |> assign(:post, %Post{})
@@ -94,7 +91,4 @@ defmodule BlogAppWeb.Create.WriteLive do
       socket
       |> assign(:form, to_form(changeset))
   end
-
-
-
 end

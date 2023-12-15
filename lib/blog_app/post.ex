@@ -34,9 +34,10 @@ defmodule BlogApp.Post do
     |> changeset(params)
     |> Repo.update()
   end
-# this gets all the posts else with the specific category
+
+  # this gets all the posts else with the specific category
   def list_posts(cat \\ nil) do
-    query = from w in __MODULE__, order_by: [asc: :inserted_at]
+    query = from w in __MODULE__, order_by: [desc: :inserted_at]
     # query =
     #   if cat do
     #     where(query, [w], w.cat == ^cat)
@@ -47,8 +48,9 @@ defmodule BlogApp.Post do
     Repo.all(query)
   end
 
-  def get_post!(id), do: Repo.get!(__MODULE__, id)
-
+  def get_post!(id) do
+    Repo.get!(__MODULE__, id)
+  end
 
   def change_post(%__MODULE__{} = tariff, attrs \\ %{}) do
     changeset(tariff, attrs)
