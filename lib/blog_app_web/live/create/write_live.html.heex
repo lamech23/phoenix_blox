@@ -1,22 +1,17 @@
 
 
 <.page_header>
-  <:overview><%= gettext("New post ") %></:overview>
-  
+  <:overview><%= gettext("New post ") %></:overview> 
 </.page_header>
 <div :if={@live_action == :new} class="flex-1 flex flex-col min-h-full py-5 w-full bg-slate-50">
-
-
  <.simple_form
-  :let={f} 
+ :let={f} 
+ for={@form}
   title={@page_title}
-  for={@form}
   id="post_form"
+  phx-change="validate"
   phx-submit="save"
-
  >
-
-
  <section class="  lg:flex lg:flex-row flex-wrap gap-8 justify-center items-center lg:mt-10 ">
   <div class="w-1/2 h-full flex flex-col gap-8 p-4 shadow-lg">
     <.input 
@@ -46,17 +41,19 @@
        class="text-2xl border p-3 border-t-2 border-t-fuchsia-800 hover:bg-fuchsia-00 text-teal-400 mb-4" phx-submit="save"><%= @page_title %>
       </button>
       
-      <.input 
-      type="file" 
-      field={f[:file]} 
-      multipart
+      <.live_component
+      module={BlogAppWeb.Create.UploadComponent}
+      id="upload-component"
+      uploads={@uploads}
+      form={f}
       />
+      
     </div>
 
     <div class="border-2 p-4 space-x-2 shadow-lg">
       <p class="text-2xl text-red-400 underline mb-4">category</p>
 
-      <div class="w-6">
+      <div class="w-4">
         <.input 
         field={f[:cat]} 
         label="art"
@@ -66,10 +63,9 @@
          
       </div>
 
-      <div class="w-6">
+      <div class="w-4">
         <.input 
-        field={f[:cat]}
-         
+        field={f[:cat]} 
         label="science"
         type="radio"
           id="science"
@@ -78,7 +74,7 @@
           
       </div>
 
-      <div class="w-6">
+      <div class="w-4">
         <.input 
         field={f[:cat]} 
         label="technology"
@@ -88,7 +84,7 @@
          />
         
       </div>
-      <div class="w-6">
+      <div class="w-4">
         <.input 
         field={f[:cat]} 
         label="food"
@@ -97,7 +93,7 @@
          value="food"
         />
       </div>
-      <div class="w-6">
+      <div class="w-4">
         <.input 
         field={f[:cat]} 
         label="design"
@@ -106,7 +102,7 @@
          value="design"
          />
       </div>
-      <div class="w-6">
+      <div class="w-4">
         <.input 
         field={f[:cat]} 
         label="music"

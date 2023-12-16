@@ -64,6 +64,7 @@ defmodule BlogAppWeb do
     quote do
       use Phoenix.LiveComponent
 
+
       unquote(html_helpers())
     end
   end

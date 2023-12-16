@@ -26,6 +26,7 @@ defmodule BlogAppWeb.Router do
 
     live( "/landing", LandingPage.LandingPageLive, :index)
     live( "/create", Create.WriteLive, :new)
+    live( "/:id/edit/", Create.WriteLive, :edit)
     live( "/:id/single", SinglePage.SinglePageLive, :index)
     live( "/login", Logs.LoginLive, :index)
   end

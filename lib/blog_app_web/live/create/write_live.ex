@@ -1,19 +1,21 @@
 defmodule BlogAppWeb.Create.WriteLive do
   use BlogAppWeb, :live_view
   alias BlogApp.Post
-  import Phoenix.HTML.Form, only: [hidden_input: 2]
 
   def mount(_params, _session, socket) do
     changeset = Post.change_post(%Post{})
-
     socket = assign(socket, :form, to_form(changeset))
+    
 
-    {
-      :ok,
+    {:ok,
       socket 
-      # |> allow_upload(:photo, accept: ~w(.jpg .jpeg .webp), max_entries: 2, auto_upload: true)
+      |> allow_upload(:photo, accept: ~w(.jpg .jpeg .webp), max_entries: 1, auto_upload: true)
+      |> assign(:uploaded_files, [])
+
     }
   end
+
+  
 
   def handle_params(params, _uri, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
@@ -35,6 +37,20 @@ defmodule BlogAppWeb.Create.WriteLive do
         {:noreply, assign_form(socket, changeset)}
     end
   end
+
+  @impl Phoenix.LiveView
+def handle_event("save", _params, socket) do
+  uploaded_files =
+    consume_uploaded_entries(socket, :avatar, fn %{path: path}, _entry ->
+      dest = Path.join([:code.priv_dir(:blog_app), "static", "uploads", Path.basename(path)])
+      # The `static/uploads` directory must exist for `File.cp!/2`
+      # and MyAppWeb.static_paths/0 should contain uploads to work,.
+      File.cp!(path, dest)
+      {:ok, ~p"/uploads/#{Path.basename(dest)}"}
+    end)
+
+  {:noreply, update(socket, :uploaded_files, &(&1 ++ uploaded_files))}
+end
 
   defp save_post(socket, :edit, post_params) do
     case Post.update(socket.assigns.post, post_params) do
@@ -78,7 +94,6 @@ defmodule BlogAppWeb.Create.WriteLive do
   defp apply_action(socket, :edit, %{"id" => id}) do
     post = Post.get!(id)
     changeset = Post.change_post(post)
-
     socket
     |> assign(:page_title, "Update Post ")
     |> assign(:desc_title, "Upating post ")

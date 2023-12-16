@@ -475,6 +475,29 @@ defmodule BlogAppWeb.CoreComponents do
     """
   end  
 
+  @doc """
+  Renders the main inner_page with generic styling.
+
+  ## Examples
+  <.main_page> ... </.main_page>
+  """
+  slot(:inner_block, required: true)
+
+  def main_page(assigns) do
+    ~H"""
+    <main>
+      <div class="w-full">
+        <div class="py-8">
+          <div class="bg-white border divide-y rounded-md shadow flex ">
+            <%= render_slot(@inner_block) %>
+          </div>
+        </div>
+      </div>
+    </main>
+    """
+  end
+
+
   @doc ~S"""
   Renders a table with generic styling.
 

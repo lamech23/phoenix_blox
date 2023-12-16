@@ -1,15 +1,26 @@
-
+<div :if={@live_action in [:new, :edit]}>
+    <.live_component
+      module={BlogWebApp.Create.WriteLive}
+      id={:edit}
+      title={@page_title}
+      desc_title={@desc_title}
+      post={@post}
+      changeset={@changeset}
+      action={@live_action}
+      navigate={~p(/live/landing)}
+    />
+  </div>
 
 <section class="flex flex-row justify-center items-start flex-wrap   gap-20">
+    <.main_page>
+
     <div  class="">
-
-
         <img src={~s"/images/stew.jpg"} class="w-fit" alt="">
         
         <div class=" flex flex-col     " >
         <p class="text-red-500 uppercase cursor-pointer text-3xl underline mt-8 mb-8"><%= @blog.title %></p>
         <div class="max-w-3xl whitespace-pre-wrap">
-        <p class="text-2xl  text-center "><%= @blog.desc %></p>
+        <p class="text-2xl  text-center font-serif "><%= @blog.desc %></p>
 
         </div>
         </div>
@@ -21,12 +32,19 @@
         </div>
         
         <div>
+            <.link
+            patch={~p"/live/edit/"}
+            >
+
             <span class="material-symbols-outlined text-teal-600 cursor-pointer">edit</span>
+            </.link>
             <span class="material-symbols-outlined text-red-600 cursor-pointer">delete</span>
             <span class="material-symbols-outlined text-teal-600 cursor-pointer">message</span>
         </div>
     </div>
     </div>
+
+</.main_page>
 
     <div class="flex flex-col justify-center items-center gap-10 ">
 
@@ -35,14 +53,12 @@
             <%= for blogs <-@related  do %>
 
             <%= if @blog.id == blogs.id do %>
-            
-
             <% else %>
 
             <img src={~s"/images/stew.jpg"} class="w-96" alt="">
             
             <p> <%= blogs.title %></p>
-            <p> <%= blogs.desc %></p>
+            <p class=" w-96  truncate ">  <%= blogs.desc %></p>
             <button>
                 <.link class="border p-3 border-fuchsia-800 border-t-4 hover:bg-fuchsia-800  " navigate={~p"/live/#{blogs.id}/single/?cat=#{blogs.cat}"}>Read More</.link>
             </button>
@@ -50,9 +66,7 @@
             <% end %>
         </div>
 
-      
-        
-        
+    
     </div>
 
 </section>
