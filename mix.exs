@@ -19,7 +19,7 @@ defmodule BlogApp.MixProject do
   def application do
     [
       mod: {BlogApp.Application, []},
-      extra_applications: [:logger, :runtime_tools, :arc, :arc_ecto]
+      extra_applications: [:logger, :runtime_tools, :arc, :arc_ecto, :mine]
     ]
   end
 
@@ -52,7 +52,8 @@ defmodule BlogApp.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:plug_cowboy, "~> 2.5"},
       {:arc, "~> 0.11.0"},
-      {:arc_ecto, "~> 0.11.3"}
+      {:arc_ecto, "~> 0.11.3"},
+      {:mine, "~> 0.3.4"}
 
 
       

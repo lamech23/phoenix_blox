@@ -2,20 +2,17 @@ defmodule BlogAppWeb.Create.WriteLive do
   use BlogAppWeb, :live_view
   alias BlogApp.Post
 
+
   def mount(_params, _session, socket) do
     changeset = Post.change_post(%Post{})
     socket = assign(socket, :form, to_form(changeset))
-    
 
     {:ok,
-      socket 
-      |> allow_upload(:photo, accept: ~w(.jpg .jpeg .webp), max_entries: 1, auto_upload: true)
-      |> assign(:uploaded_files, [])
+     socket
+     |> allow_upload(:photo, accept: ~w(.jpg .jpeg .webp), max_entries: 1, auto_upload: true)
+     |> assign(:uploaded_files, [])}
 
-    }
   end
-
-  
 
   def handle_params(params, _uri, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
@@ -26,7 +23,9 @@ defmodule BlogAppWeb.Create.WriteLive do
   end
 
   defp save_post(socket, :new, post_params) do
-    case Post.create(post_params) do
+    post = file_url(socket, %Post{})
+
+    case Post.create(post, post_params, &consume_photos(socket, &1)) do
       {:ok, _post} ->
         {:noreply,
          socket
@@ -38,22 +37,10 @@ defmodule BlogAppWeb.Create.WriteLive do
     end
   end
 
-  @impl Phoenix.LiveView
-def handle_event("save", _params, socket) do
-  uploaded_files =
-    consume_uploaded_entries(socket, :avatar, fn %{path: path}, _entry ->
-      dest = Path.join([:code.priv_dir(:blog_app), "static", "uploads", Path.basename(path)])
-      # The `static/uploads` directory must exist for `File.cp!/2`
-      # and MyAppWeb.static_paths/0 should contain uploads to work,.
-      File.cp!(path, dest)
-      {:ok, ~p"/uploads/#{Path.basename(dest)}"}
-    end)
-
-  {:noreply, update(socket, :uploaded_files, &(&1 ++ uploaded_files))}
-end
-
+ 
   defp save_post(socket, :edit, post_params) do
-    case Post.update(socket.assigns.post, post_params) do
+    post = file_url(socket, socket.assigns.post)
+    case Post.update(post, post_params, &consume_photos(socket, &1)) do
       {:ok, post} ->
         {:noreply,
          socket
@@ -82,6 +69,7 @@ end
   end
 
   defp apply_action(socket, :new, _params) do
+
     changeset = Post.change_post(%Post{})
 
     socket
@@ -94,6 +82,7 @@ end
   defp apply_action(socket, :edit, %{"id" => id}) do
     post = Post.get!(id)
     changeset = Post.change_post(post)
+
     socket
     |> assign(:page_title, "Update Post ")
     |> assign(:desc_title, "Upating post ")
@@ -102,8 +91,30 @@ end
   end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
-    {:ok, changeset} =
-      socket
-      |> assign(:form, to_form(changeset))
+    socket |> assign(:form, to_form(changeset)) |> IO.inspect()
+  end
+
+
+  def ext(entry) do
+    [ext | _] = MINE.extension(entry.client_type)
+    ext
+  end
+  
+  defp file_url(socket, %Post{}= post) do
+    #get all the completed entries with a liveView built in function namely "completed []"
+    #this will result to the completed images and anything that is in progres
+    {completed, []} =uploaded_entries(socket, :photo)
+    urls = 
+       for entry  <- completed do
+        Routes.static_path(socket, "/uploads/#{ext(entry)}")  
+       end
+  end
+
+  def consume_photos(socket, %Post{}= post) do
+    consume_uploaded_entries(socket, :photo, fn meta, entry -> 
+    dest = Path.join("priv/static/uploads", "#{ext(entry)}")
+    File.cp!(meta.path, dest)
+  end)
+    {:ok, post}
   end
 end

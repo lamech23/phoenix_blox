@@ -56,7 +56,10 @@ config :blog_app, BlogAppWeb.Endpoint,
 config :blog_app, BlogAppWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
+      # the reason for the uploads is when it finds uploads have been added it shoul not reload the page
+      # other wise when we upload a file its going to reload the page 
+      
+      ~r"priv/static/[^uploads].*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/blog_app_web/(controllers|live|components)/.*(ex|heex)$"
     ]

@@ -19,21 +19,36 @@ defmodule BlogApp.Post do
     post
     |> cast(attrs, [:title, :desc, :cat])
     |> validate_required([:title, :desc, :cat])
+
   end
 
-  @spec create(Map.t()) :: {:ok, t} | {:error, Ecto.Changeset.t()}
-  def create(params) do
+  # @spec create(Map.t()) :: {:ok, t} | {:error, Ecto.Changeset.t()}
+  def create(params, attrs, after_save \\ &{:ok, &1} )do
     %__MODULE__{}
     |> changeset(params)
     |> Repo.insert()
+    |>after_save(after_save)
   end
 
-  @spec update(t, Map.t()) :: {:ok, t} | {:error, Ecto.Changeset.t()}
-  def update(post, params) do
+
+  defp after_save({:ok, post}, func) do
+    {:ok, _post} = func.(post)
+  end
+
+
+  defp after_save(error, _func), do: error
+  
+
+  # @spec update(t, Map.t()) :: {:ok, t} | {:error, Ecto.Changeset.t()}
+  def update(post, params, after_save \\ &{:ok, &1}) do
     post
     |> changeset(params)
     |> Repo.update()
+    |> after_save(after_save)
+
   end
+
+
 
   # this gets all the posts else with the specific category
   def list_posts(cat) do

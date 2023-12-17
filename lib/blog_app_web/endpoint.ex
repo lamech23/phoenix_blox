@@ -21,7 +21,7 @@ defmodule BlogAppWeb.Endpoint do
     at: "/",
     from: :blog_app,
     gzip: false,
-    only: BlogAppWeb.static_paths()
+    only: ~w( assets css fonts images js favicon.ico robots.txt uploads)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

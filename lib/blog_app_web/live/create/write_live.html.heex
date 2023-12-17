@@ -12,6 +12,7 @@
   phx-change="validate"
   phx-submit="save"
  >
+
  <section class="  lg:flex lg:flex-row flex-wrap gap-8 justify-center items-center lg:mt-10 ">
   <div class="w-1/2 h-full flex flex-col gap-8 p-4 shadow-lg">
     <.input 
@@ -26,7 +27,7 @@
     class="block w-full lg:h-64 shadow-lg bg-teal-400 rounded-lg p-4 text-2xl"
     field={f[:desc]}
     type="textarea"
-      placeholder=""
+    placeholder=""
     >
   </.input>
   </div>
@@ -43,7 +44,7 @@
       
       <.live_component
       module={BlogAppWeb.Create.UploadComponent}
-      id="upload-component"
+      id="upload_svcomponent"
       uploads={@uploads}
       form={f}
       />

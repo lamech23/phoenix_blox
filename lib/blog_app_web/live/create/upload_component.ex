@@ -56,6 +56,7 @@ defmodule BlogAppWeb.Create.UploadComponent do
                     </div>
                   </dd>
                  </div>
+       
                </div>
             </div>
           <% end %>
