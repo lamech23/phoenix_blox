@@ -7,7 +7,6 @@
       post={@post}
       changeset={@changeset}
       action={@live_action}
-      navigate={~p(/live/landing)}
     />
   </div>
 
@@ -32,11 +31,10 @@
         </div>
         
         <div>
-            <.link
-            patch={~p"/live/edit/"}
-            >
 
-            <span class="material-symbols-outlined text-teal-600 cursor-pointer">edit</span>
+          <.link patch={~p"/live/#{@blog}/edit"} >
+                
+                <span class="material-symbols-outlined text-teal-600 cursor-pointer">edit</span>
             </.link>
             <span class="material-symbols-outlined text-red-600 cursor-pointer">delete</span>
             <span class="material-symbols-outlined text-teal-600 cursor-pointer">message</span>

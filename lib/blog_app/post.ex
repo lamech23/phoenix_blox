@@ -19,7 +19,8 @@ defmodule BlogApp.Post do
     post
     |> cast(attrs, [:title, :desc, :cat])
     |> validate_required([:title, :desc, :cat])
-    |> validate_length(:title, min: 20 )
+    # |> validate_length(:desc, min: 100 )
+    |> validate_length(:title, min: 10 )
 
   end
 

@@ -28,7 +28,6 @@ defmodule BlogAppWeb.Create.WriteLive do
 
   defp save_post(socket, :new, post_params) do
     post = file_url(socket, %Post{})
-
     case Post.create(post, post_params, &consume_photos(socket, &1)) do
       {:ok, _post} ->
         {:noreply,
@@ -49,7 +48,7 @@ defmodule BlogAppWeb.Create.WriteLive do
         {:noreply,
          socket
          |> put_flash(:info, "Updated successfully")
-         |> redirect(to: "/live/landin")}
+         |> redirect(to: "/live/landing")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
@@ -58,7 +57,7 @@ defmodule BlogAppWeb.Create.WriteLive do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Tarrif Rules")
+    |> assign(:page_title, "All post")
   end
 
   # validate 
@@ -68,13 +67,11 @@ defmodule BlogAppWeb.Create.WriteLive do
       socket.assigns.post
       |> Post.changeset(post_params)
       |> Map.put(:action, :validate)
-      |> IO.inspect()
 
     {:noreply, assign_form(socket,  changeset)}
   end
 
   defp apply_action(socket, :new, _params) do
-
     changeset = Post.change_post(%Post{})
 
     socket
@@ -85,13 +82,12 @@ defmodule BlogAppWeb.Create.WriteLive do
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
-    post = Post.get!(id)
+    post = Post.get_post!(id)
     changeset = Post.change_post(post)
-
     socket
     |> assign(:page_title, "Update Post ")
     |> assign(:desc_title, "Upating post ")
-    |> assign(:id, id)
+    |> assign(:post, post)
     |> assign(:changeset, changeset)
   end
 
@@ -104,10 +100,9 @@ defmodule BlogAppWeb.Create.WriteLive do
   def ext(entry) do
     [ext | _] = MIME.extension(entry.client_type)
     ext
-    |> IO.inspect()
   end
   
-  defp file_url(socket, %Post{}= post) do
+  defp file_url(socket, %Post{} = post) do
     #get all the completed entries with a liveView built in function namely "completed []"
     #this will result to the completed images and anything that is in progres
     {completed, []} =uploaded_entries(socket, :photo)
@@ -115,6 +110,7 @@ defmodule BlogAppWeb.Create.WriteLive do
        for entry  <- completed do
         Routes.static_path(socket, "/uploads/#{ext(entry)}")  
        end
+       |> IO.inspect()
   end
 
   def consume_photos(socket, %Post{}= post) do

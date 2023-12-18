@@ -6,7 +6,7 @@ defmodule BlogAppWeb.Create.UploadComponent do
   def render(assigns) do
     ~H"""
     <div>
-      <%= hidden_input @form, :file %>
+      <%= hidden_input @form, :photo %>
       <%!-- <%= error_tag @form, :photo_url %> --%>
       <div class="col-span-4 sm:col-span-2" phx-drop-target={@uploads.photo.ref}>
         <div class="mt-2 border-2 border-gray-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center">

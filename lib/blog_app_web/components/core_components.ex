@@ -456,7 +456,7 @@ defmodule BlogAppWeb.CoreComponents do
   def page_header(assigns) do
     ~H"""
     <div class=" sm:text-center pb-6 mt-4 border-b border-gray-200 sm:mt-0 sm:pt-1 ">
-      <p :if={@overview != []} class="text-xl font-medium tracking-wide text-gray-500 uppercase">
+      <p :if={@overview != []} class="text-xl font-medium tracking-wide text-teal-500 uppercase">
         <%= render_slot(@overview) %>
       </p>
       <p :if={@page_title != []} class="text-2xl font-semibold text-gray-700 sm:text-2xl">
