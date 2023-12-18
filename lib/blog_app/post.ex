@@ -68,6 +68,11 @@ defmodule BlogApp.Post do
     Repo.get!(__MODULE__, id)
   end
 
+
+  def delete(post) do
+    Repo.delete(post)
+  end
+
   def change_post(%__MODULE__{} = tariff, attrs \\ %{}) do
     changeset(tariff, attrs)
   end

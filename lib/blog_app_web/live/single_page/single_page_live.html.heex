@@ -36,7 +36,15 @@
                 
                 <span class="material-symbols-outlined text-teal-600 cursor-pointer">edit</span>
             </.link>
-            <span class="material-symbols-outlined text-red-600 cursor-pointer">delete</span>
+            <button 
+            type="button" 
+            class="material-symbols-outlined text-red-600 cursor-pointer" 
+            phx-click={JS.push("delete_post", value: %{"id"=> @blog.id}) |> hide("##{@blog.id}")}
+
+            data-confirm="Are you sure?"
+
+            >
+            delete</button>
             <span class="material-symbols-outlined text-teal-600 cursor-pointer">message</span>
         </div>
     </div>

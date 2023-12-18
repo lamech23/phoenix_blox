@@ -3,7 +3,6 @@ defmodule BlogAppWeb.Create.WriteLive do
   alias BlogApp.Post
   alias MIME
 
-
   def mount(_params, _session, socket) do
     changeset = Post.change_post(%Post{})
     socket = assign(socket, :form, to_form(changeset))
@@ -12,10 +11,7 @@ defmodule BlogAppWeb.Create.WriteLive do
     {:ok,
      socket
      |> allow_upload(:photo, accept: ~w(.jpg .jpeg .webp), max_entries: 1, auto_upload: true)
-     |> assign(:uploaded_files, [])} 
-     
-
-
+     |> assign(:uploaded_files, [])}
   end
 
   def handle_params(params, _uri, socket) do
@@ -28,6 +24,7 @@ defmodule BlogAppWeb.Create.WriteLive do
 
   defp save_post(socket, :new, post_params) do
     post = file_url(socket, %Post{})
+
     case Post.create(post, post_params, &consume_photos(socket, &1)) do
       {:ok, _post} ->
         {:noreply,
@@ -40,9 +37,9 @@ defmodule BlogAppWeb.Create.WriteLive do
     end
   end
 
- 
   defp save_post(socket, :edit, post_params) do
     post = file_url(socket, socket.assigns.post)
+
     case Post.update(post, post_params, &consume_photos(socket, &1)) do
       {:ok, post} ->
         {:noreply,
@@ -54,6 +51,7 @@ defmodule BlogAppWeb.Create.WriteLive do
         {:noreply, assign_form(socket, changeset)}
     end
   end
+
 
   defp apply_action(socket, :index, _params) do
     socket
@@ -68,7 +66,7 @@ defmodule BlogAppWeb.Create.WriteLive do
       |> Post.changeset(post_params)
       |> Map.put(:action, :validate)
 
-    {:noreply, assign_form(socket,  changeset)}
+    {:noreply, assign_form(socket, changeset)}
   end
 
   defp apply_action(socket, :new, _params) do
@@ -84,6 +82,7 @@ defmodule BlogAppWeb.Create.WriteLive do
   defp apply_action(socket, :edit, %{"id" => id}) do
     post = Post.get_post!(id)
     changeset = Post.change_post(post)
+
     socket
     |> assign(:page_title, "Update Post ")
     |> assign(:desc_title, "Upating post ")
@@ -92,32 +91,33 @@ defmodule BlogAppWeb.Create.WriteLive do
   end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
-    socket 
-    |> assign(:form, to_form(changeset)) 
+    socket
+    |> assign(:form, to_form(changeset))
   end
-
 
   def ext(entry) do
     [ext | _] = MIME.extension(entry.client_type)
     ext
   end
-  
+
   defp file_url(socket, %Post{} = post) do
-    #get all the completed entries with a liveView built in function namely "completed []"
-    #this will result to the completed images and anything that is in progres
-    {completed, []} =uploaded_entries(socket, :photo)
-    urls = 
-       for entry  <- completed do
-        Routes.static_path(socket, "/uploads/#{ext(entry)}")  
-       end
-       |> IO.inspect()
+    # get all the completed entries with a liveView built in function namely "completed []"
+    # this will result to the completed images and anything that is in progres
+    {completed, []} = uploaded_entries(socket, :photo)
+
+    urls =
+      for entry <- completed do
+        Routes.static_path(socket, "/uploads/#{ext(entry)}")
+      end
+      |> IO.inspect()
   end
 
-  def consume_photos(socket, %Post{}= post) do
-    consume_uploaded_entries(socket, :photo, fn meta, entry -> 
-    dest = Path.join("priv/static/uploads", "#{ext(entry)}")
-    File.cp!(meta.path, dest)
-  end)
+  def consume_photos(socket, %Post{} = post) do
+    consume_uploaded_entries(socket, :photo, fn meta, entry ->
+      dest = Path.join("priv/static/uploads", "#{ext(entry)}")
+      File.cp!(meta.path, dest)
+    end)
+
     {:ok, post}
   end
 end
