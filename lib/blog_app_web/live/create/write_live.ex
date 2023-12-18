@@ -1,16 +1,20 @@
 defmodule BlogAppWeb.Create.WriteLive do
   use BlogAppWeb, :live_view
   alias BlogApp.Post
+  alias MIME
 
 
   def mount(_params, _session, socket) do
     changeset = Post.change_post(%Post{})
     socket = assign(socket, :form, to_form(changeset))
+    :application.set_env(:mime, :suffixes, %{"gzip" => ["gz"]})
 
     {:ok,
      socket
      |> allow_upload(:photo, accept: ~w(.jpg .jpeg .webp), max_entries: 1, auto_upload: true)
-     |> assign(:uploaded_files, [])}
+     |> assign(:uploaded_files, [])} 
+     
+
 
   end
 
@@ -59,13 +63,14 @@ defmodule BlogAppWeb.Create.WriteLive do
 
   # validate 
 
-  def handle_event("validate", post_params, socket) do
+  def handle_event("validate", %{"post" => post_params}, socket) do
     changeset =
       socket.assigns.post
       |> Post.changeset(post_params)
       |> Map.put(:action, :validate)
+      |> IO.inspect()
 
-    {:noreply, assign(socket, changeset: changeset)}
+    {:noreply, assign_form(socket,  changeset)}
   end
 
   defp apply_action(socket, :new, _params) do
@@ -91,13 +96,15 @@ defmodule BlogAppWeb.Create.WriteLive do
   end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
-    socket |> assign(:form, to_form(changeset)) |> IO.inspect()
+    socket 
+    |> assign(:form, to_form(changeset)) 
   end
 
 
   def ext(entry) do
-    [ext | _] = MINE.extension(entry.client_type)
+    [ext | _] = MIME.extension(entry.client_type)
     ext
+    |> IO.inspect()
   end
   
   defp file_url(socket, %Post{}= post) do
