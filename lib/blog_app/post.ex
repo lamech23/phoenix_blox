@@ -19,17 +19,17 @@ defmodule BlogApp.Post do
     post
     |> cast(attrs, [:title, :desc, :cat])
     |> validate_required([:title, :desc, :cat])
-    # |> validate_length(:desc, min: 100 )
+    |> validate_length(:desc, min: 100 )
     |> validate_length(:title, min: 10 )
 
   end
 
   # @spec create(Map.t()) :: {:ok, t} | {:error, Ecto.Changeset.t()}
-  def create(params, attrs, after_save \\ &{:ok, &1} )do
+  def create(params,  after_save \\ &{:ok, &1} )do
     %__MODULE__{}
     |> changeset(params)
     |> Repo.insert()
-    |>after_save(after_save)
+    |> after_save(after_save)
   end
 
 

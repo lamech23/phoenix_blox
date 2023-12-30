@@ -10,7 +10,7 @@ defmodule BlogAppWeb.Create.WriteLive do
 
     {:ok,
      socket
-     |> allow_upload(:photo, accept: ~w(.jpg .jpeg .webp), max_entries: 1, auto_upload: true)
+     |> allow_upload(:file, accept: ~w(.jpg .jpeg .webp), max_entries: 1, auto_upload: true)
      |> assign(:uploaded_files, [])}
   end
 
@@ -25,7 +25,7 @@ defmodule BlogAppWeb.Create.WriteLive do
   defp save_post(socket, :new, post_params) do
     post = file_url(socket, %Post{})
 
-    case Post.create(post, post_params, &consume_photos(socket, &1)) do
+    case Post.create( post,  &consume_photos(socket, &1)) do
       {:ok, _post} ->
         {:noreply,
          socket
@@ -66,12 +66,11 @@ defmodule BlogAppWeb.Create.WriteLive do
       |> Post.changeset(post_params)
       |> Map.put(:action, :validate)
 
-    {:noreply, assign_form(socket, changeset)}
+    {:noreply, assign_form(socket,  changeset)}
   end
 
   defp apply_action(socket, :new, _params) do
     changeset = Post.change_post(%Post{})
-
     socket
     |> assign(:page_title, "Publish")
     |> assign(:post, %Post{})
@@ -95,26 +94,22 @@ defmodule BlogAppWeb.Create.WriteLive do
     |> assign(:form, to_form(changeset))
   end
 
-  def ext(entry) do
-    [ext | _] = MIME.extension(entry.client_type)
-    ext
-  end
-
+  
   defp file_url(socket, %Post{} = post) do
     # get all the completed entries with a liveView built in function namely "completed []"
     # this will result to the completed images and anything that is in progres
-    {completed, []} = uploaded_entries(socket, :photo)
+    {completed, []} = uploaded_entries(socket, :file)
 
     urls =
       for entry <- completed do
-        Routes.static_path(socket, "/uploads/#{ext(entry)}")
+      ~w(socket, "/uploads/#{entry.uuid}")
       end
-      |> IO.inspect()
+      %Post{post | file: urls}
   end
 
   def consume_photos(socket, %Post{} = post) do
-    consume_uploaded_entries(socket, :photo, fn meta, entry ->
-      dest = Path.join("priv/static/uploads", "#{ext(entry)}")
+    consume_uploaded_entries(socket, :file, fn meta, entry ->
+      dest = Path.join("priv/static/uploads", "#enter.uuid")
       File.cp!(meta.path, dest)
     end)
 
