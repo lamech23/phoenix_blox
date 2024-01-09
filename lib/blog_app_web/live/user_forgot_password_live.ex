@@ -45,6 +45,6 @@ defmodule BlogAppWeb.UserForgotPasswordLive do
     {:noreply,
      socket
      |> put_flash(:info, info)
-     |> redirect(to: ~p"/")}
+     |> redirect(to: ~p"/live/landing")}
   end
 end
