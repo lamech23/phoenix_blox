@@ -1,36 +1,5 @@
 
   
-  <section  x-data="{open: true}" class="m-6 lg:flex lg:flex-row flex flex-col justify-between items-center gap-4 lg:px-80 text-teal-800 font-serif">
-    <div class="text-3xl flex flex-row justify-between items-center gap-4">
-      <.link navigate={~p"/live/landing"}>
-      <img src={~s"/images/stew.jpg"} alt="" class=" w-28 h-28 rounded-full">
-    </.link>
-      <p>Blog</p>
-      
-      <div class=" lg:hidden  ">
-      <span @click ="open = !open" type="button" class="material-symbols-outlined  cursor-pointer "> reorder </span>
-    </div>
-    </div>
-
-  <ul
-  x-show="open"
-  class="lg:flex lg:flex-row flex-1 space-x-6 justify-end align-middle lg:items-center text-3xl   p-4 flex flex-col items-center flex-wrap"
->
-    <.link navigate={~p"/live/landing/?cat=art"}> Art </.link>
-
-    <.link navigate={~p"/live/landing/?cat=science"}> Science </.link>
-
-    <.link navigate={~p"/live/landing/?cat=technology"}> Technology </.link>
-
-    <.link navigate={~p"/live/landing/?cat=design"}> Design </.link>
-
-    <.link navigate={~p"/live/landing/?cat=music"}> Music </.link>
-
-    <.link navigate={~p"/live/login"} class="hover:border-b-2  hover:border-b-fuchsia-800">login</.link>
-
-    <.link navigate={~p"/live/create"} class="hover:border-b-2  hover:border-b-fuchsia-800">Create</.link>
-  </ul>
-</section>
 
 
 <main class="px-4 py-20 sm:px-6 lg:px-8 bg-slate-200 ">
