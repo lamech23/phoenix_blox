@@ -23,9 +23,8 @@ defmodule BlogAppWeb.Create.WriteLive do
   end
 
   defp save_post(socket, :new, post_params) do
-    post = file_url(socket, %Post{})
 
-    case Post.create( post,  &consume_photos(socket, &1)) do
+    case Post.create(post_params) do
       {:ok, _post} ->
         {:noreply,
          socket
@@ -38,9 +37,8 @@ defmodule BlogAppWeb.Create.WriteLive do
   end
 
   defp save_post(socket, :edit, post_params) do
-    post = file_url(socket, socket.assigns.post)
 
-    case Post.update(post, post_params, &consume_photos(socket, &1)) do
+    case Post.update(socket.assigns.post,  post_params) do
       {:ok, post} ->
         {:noreply,
          socket
@@ -66,7 +64,7 @@ defmodule BlogAppWeb.Create.WriteLive do
       |> Post.changeset(post_params)
       |> Map.put(:action, :validate)
 
-    {:noreply, assign_form(socket,  changeset)}
+    {:noreply, assign(socket,  changeset: changeset)}
   end
 
   defp apply_action(socket, :new, _params) do
@@ -94,25 +92,5 @@ defmodule BlogAppWeb.Create.WriteLive do
     |> assign(:form, to_form(changeset))
   end
 
-  
-  defp file_url(socket, %Post{} = post) do
-    # get all the completed entries with a liveView built in function namely "completed []"
-    # this will result to the completed images and anything that is in progres
-    {completed, []} = uploaded_entries(socket, :file)
 
-    urls =
-      for entry <- completed do
-      ~w(socket, "/uploads/#{entry.uuid}")
-      end
-      %Post{post | file: urls}
-  end
-
-  def consume_photos(socket, %Post{} = post) do
-    consume_uploaded_entries(socket, :file, fn meta, entry ->
-      dest = Path.join("priv/static/uploads", "#enter.uuid")
-      File.cp!(meta.path, dest)
-    end)
-
-    {:ok, post}
-  end
 end

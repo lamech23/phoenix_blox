@@ -19,55 +19,41 @@ defmodule BlogApp.Post do
     post
     |> cast(attrs, [:title, :desc, :cat])
     |> validate_required([:title, :desc, :cat])
-    |> validate_length(:desc, min: 100 )
-    |> validate_length(:title, min: 10 )
-
+    |> validate_length(:desc, min: 100)
+    |> validate_length(:title, min: 10)
   end
 
-  # @spec create(Map.t()) :: {:ok, t} | {:error, Ecto.Changeset.t()}
-  def create(params,  after_save \\ &{:ok, &1} )do
+  @spec create(Map.t()) :: {:ok, t} | {:error, Ecto.Changeset.t()}
+  def create(params) do
     %__MODULE__{}
     |> changeset(params)
     |> Repo.insert()
-    |> after_save(after_save)
   end
 
-
-  defp after_save({:ok, post}, func) do
-    {:ok, _post} = func.(post)
-  end
-
-
-  defp after_save(error, _func), do: error
-  
-
-  # @spec update(t, Map.t()) :: {:ok, t} | {:error, Ecto.Changeset.t()}
-  def update(post, params, after_save \\ &{:ok, &1}) do
+  @spec update(t, Map.t()) :: {:ok, t} | {:error, Ecto.Changeset.t()}
+  def update(post, params) do
     post
     |> changeset(params)
     |> Repo.update()
-    |> after_save(after_save)
-
   end
-
-
 
   # this gets all the posts else with the specific category
   def list_posts(cat) do
     query = from p in __MODULE__, order_by: [desc: :inserted_at]
+
     query =
       if cat do
-        where(query, [w], w.cat == ^cat) 
+        where(query, [w], w.cat == ^cat)
       else
         query
       end
+
     Repo.all(query)
   end
 
   def get_post!(id) do
     Repo.get!(__MODULE__, id)
   end
-
 
   def delete(post) do
     Repo.delete(post)
