@@ -9,16 +9,10 @@ defmodule BlogAppWeb.LandingPage.LandingPageLive do
     # end
 
   def mount(params, _session, socket) do
-    if connected?(socket) do
+   
+       posts = Post.list_posts(params["cat"])
 
-      socket =
-        socket
-        |> assign(loading: false) 
-        |> stream(:posts, Post.list_posts(params["cat"]))
-
-      {:ok, socket}
-    else
-      {:ok, assign(socket, loading: true)}
-    end
+      {:ok, assign(socket, posts: posts)}
+ 
   end
 end

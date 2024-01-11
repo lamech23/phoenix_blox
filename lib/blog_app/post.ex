@@ -2,14 +2,14 @@ defmodule BlogApp.Post do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
-  @type t :: %__MODULE__{cat: String.t(), desc: String.t(), title: String.t()}
+  @type t :: %__MODULE__{cat: String.t(), desc: String.t(), title: String.t(), image: String.t()}
   alias BlogApp.Repo
 
   schema "posts" do
     field :cat, :string
     field :desc, :string
     field :title, :string
-    field :file, :string
+    field :image, {:array, :string}, default: []
 
     timestamps(type: :utc_datetime)
   end
@@ -19,7 +19,7 @@ defmodule BlogApp.Post do
     post
     |> cast(attrs, [:title, :desc, :cat])
     |> validate_required([:title, :desc, :cat])
-    |> validate_length(:desc, min: 100)
+    |> validate_length(:desc, min: 10)
     |> validate_length(:title, min: 10)
   end
 

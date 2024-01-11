@@ -5,13 +5,12 @@ defmodule BlogAppWeb.Create.WriteLive do
   def mount(_params, _session, socket) do
     changeset = Post.change_post(%Post{})
     socket = assign(socket, :form, to_form(changeset))
-    :application.set_env(:mime, :suffixes, %{"gzip" => ["gz"]})
 
     {:ok,
      socket
-     |> allow_upload(:file, accept: ~w(.jpg .jpeg .webp), max_entries: 1, auto_upload: true)
+     |> allow_upload(:image, accept: ~w(.jpg .jpeg .webp),  max_entries: 1, auto_upload: true)
      |> assign(:uploaded_files, [])}
-     
+    #  |> IO.inspect()
   end
 
   def handle_params(params, _uri, socket) do
@@ -22,21 +21,20 @@ defmodule BlogAppWeb.Create.WriteLive do
     save_post(socket, socket.assigns.live_action, post_params)
   end
 
-
   @impl true
-  defp save_post(socket, :new, post_params) do
-    %{current_user: user} = socket.assigns.current_user
-
+  defp save_post(socket, :new, %{"post" => post_params}) do
+   
     post_params
-    |> Map.put("user_id", user.id)
-    |> Map.put("image_path", List.first(consume_files(socket)))
+    |> IO.inspect()
+    |> Map.put("image", List.first(consume_files(socket)))
     |> Post.create()
+
     |> case do
       {:ok, _post} ->
         {:noreply,
          socket
          |> put_flash(:info, "post created succesfully")
-         |> push_navigate(to: "/live/landing")}
+         |> push_navigate(to: ~p"/live/landing")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
@@ -62,11 +60,10 @@ defmodule BlogAppWeb.Create.WriteLive do
     |> assign(:page_title, "All post")
   end
 
-
   @impl true
-def handle_event("cancel-upload", %{"ref" => ref}, socket) do
-  {:noreply, cancel_upload(socket, :avatar, ref)}
-end
+  def handle_event("cancel-upload", %{"ref" => ref}, socket) do
+    {:noreply, cancel_upload(socket, :avatar, ref)}
+  end
 
   # validate 
   def handle_event("validate", %{"post" => post_params}, socket) do
@@ -74,6 +71,7 @@ end
       socket.assigns.post
       |> Post.changeset(post_params)
       |> Map.put(:action, :validate)
+
 
     {:noreply, assign(socket, changeset: changeset)}
   end
@@ -106,14 +104,10 @@ end
 
   defp consume_files(socket) do
     uploaded_files =
-      consume_uploaded_entries(socket, :avatar, fn %{path: path}, _entry ->
-        dest = Path.join(Application.app_dir(:my_app, "priv/static/uploads"), Path.basename(path))
+      consume_uploaded_entries(socket, :image, fn %{path: path}, _entry ->
+        dest = Path.join([:code.priv_dir(:blog_app), "static", "uploads", Path.basename(path)])
         File.cp!(path, dest)
         {:ok, ~p"/uploads/#{Path.basename(dest)}"}
       end)
-
-    {:noreply, update(socket, :uploaded_files, &(&1 ++ uploaded_files))}
   end
-
-  
 end
