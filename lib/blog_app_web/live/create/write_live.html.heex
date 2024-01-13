@@ -39,9 +39,15 @@
        class="text-2xl border p-3 border-t-2 border-t-fuchsia-800 hover:bg-fuchsia-00 text-teal-400 mb-4" phx-submit="save"><%= @page_title %>
       </button>
       
-      <div class="flex text-sm text-gray-600 ml-20">
-        <.live_file_input upload={@uploads.image}  />
-      </div>
+     
+
+      <.live_component
+      module={BlogAppWeb.Create.UploadComponent}
+      id="upload-component"
+      uploads={@uploads}
+      form={f}
+      
+      />
     </div>
 
     <div class="border-2 p-4 space-x-2 shadow-lg">

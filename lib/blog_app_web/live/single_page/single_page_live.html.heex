@@ -10,11 +10,10 @@
     />
   </div>
 
-<section class="flex flex-row justify-center items-start flex-wrap   gap-20">
-    <.main_page>
+  <section class="flex justify-center items-center flex-wrap gap-40">
 
-    <div  class="">
-        <img src={~s"/images/stew.jpg"} class="w-fit" alt="">
+    <div  class="  flex flex-col justify-start items-start  ">
+        <img src={@blog.image}  alt=""  style="width:600px;height:600px;">
         
         <div class=" flex flex-col     " >
         <p class="text-red-500 uppercase cursor-pointer text-3xl underline mt-8 mb-8"><%= @blog.title %></p>
@@ -50,9 +49,8 @@
     </div>
     </div>
 
-</.main_page>
 
-    <div class="flex flex-col justify-center items-center gap-10   overflow-scroll  " style="height: 700px;">
+    <div class="flex flex-col justify-center items-center gap-10   overflow-scroll border-l-2 p-20   " style="height: 700px;">
         <div class="flex flex-col  justify-start items-start gap-20 ">
             
             <%= for blogs <-@related  do %>
@@ -60,7 +58,7 @@
             <%= if @blog.id == blogs.id do %>
             <% else %>
 
-            <img src={~s"/images/stew.jpg"} class="w-96" alt="">
+            <img src={blogs.image} class="w-96" alt="">
             
             <p> <%= blogs.title %></p>
             <p class=" w-96  truncate ">  <%= blogs.desc %></p>

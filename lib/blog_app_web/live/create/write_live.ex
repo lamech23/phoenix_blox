@@ -8,7 +8,7 @@ defmodule BlogAppWeb.Create.WriteLive do
 
     {:ok,
      socket
-     |> allow_upload(:image, accept: ~w(.jpg .jpeg .webp), max_entries: 1, auto_upload: true)
+     |> allow_upload(:image, accept: ~w(.jpg .jpeg .webp .png), max_entries: 1, auto_upload: true)
      |> assign(:uploaded_files, [])}
 
     #  |> IO.inspect()
@@ -24,17 +24,14 @@ defmodule BlogAppWeb.Create.WriteLive do
 
   @impl true
   defp save_post(socket, :new, %{"post" => post_params}) do
-    image = Map.get(socket.assigns, :uploads, %{})["image"]
 
     post_params_with_image =
       post_params
-      |> Map.put("image", List.first(consume_files(socket |> IO.inspect())))
+      |> Map.put("image", List.first(consume_files(socket)))
 
     post_params_with_image
     |> Map.merge(%{"image" => [post_params_with_image["image"]]})
-    |> IO.inspect()
     |> Post.create()
-    |> IO.inspect()
     |> case do
       {:ok, _post} ->
         {:noreply,
