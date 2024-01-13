@@ -45,9 +45,13 @@ defmodule BlogAppWeb.Create.WriteLive do
   end
 
   @impl true
-  defp save_post(socket, :edit, post_params) do
-    case Post.update(socket.assigns.post, post_params) do
-      {:ok, post} ->
+  defp save_post(socket, :edit, %{"post" => post_params}) do
+    IO.inspect(post_params, label: "before")
+    posts = socket.assigns.post 
+
+    case Post.update(posts, post_params ) do
+      {:ok, post } ->
+        IO.inspect(post, label: "after")
         {:noreply,
          socket
          |> put_flash(:info, "Updated successfully")
@@ -95,7 +99,7 @@ defmodule BlogAppWeb.Create.WriteLive do
     socket
     |> assign(:page_title, "Update Post ")
     |> assign(:desc_title, "Upating post ")
-    |> assign(:post, post)
+    |> assign(:post, post |> IO.inspect())
     |> assign(:changeset, changeset)
   end
 
