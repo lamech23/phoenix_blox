@@ -4,12 +4,15 @@ defmodule BlogApp.Post do
   import Ecto.Query
   @type t :: %__MODULE__{cat: String.t(), desc: String.t(), title: String.t(), image: String.t()}
   alias BlogApp.Repo
+  alias BlogApp.User
 
   schema "posts" do
     field :cat, :string
     field :desc, :string
     field :title, :string
     field :image, {:array, :string}, default: []
+    belongs_to :user, User
+
 
     timestamps(type: :utc_datetime)
   end
