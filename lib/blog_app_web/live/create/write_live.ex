@@ -26,8 +26,8 @@ defmodule BlogAppWeb.Create.WriteLive do
   defp save_post(socket, :new, %{"post" => post_params}) do
 
     post_params_with_image =
-      post_params
-      |> Map.put("image", List.first(consume_files(socket)))
+    post_params
+    |> Map.put("image", List.first(consume_files(socket)))
 
     post_params_with_image
     |> Map.merge(%{"image" => [post_params_with_image["image"]]})
@@ -46,12 +46,9 @@ defmodule BlogAppWeb.Create.WriteLive do
 
   @impl true
   defp save_post(socket, :edit, %{"post" => post_params}) do
-    IO.inspect(post_params, label: "before")
     posts = socket.assigns.post 
-
     case Post.update(posts, post_params ) do
       {:ok, post } ->
-        IO.inspect(post, label: "after")
         {:noreply,
          socket
          |> put_flash(:info, "Updated successfully")
@@ -99,7 +96,7 @@ defmodule BlogAppWeb.Create.WriteLive do
     socket
     |> assign(:page_title, "Update Post ")
     |> assign(:desc_title, "Upating post ")
-    |> assign(:post, post |> IO.inspect())
+    |> assign(:post, post)
     |> assign(:changeset, changeset)
   end
 

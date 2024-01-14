@@ -33,11 +33,21 @@
 
   <div class="flex flex-col  gap-8 w-1/2 lg:w-2/12 p-4">
     <div class="border-2 p-4 shadow-lg">
+
+       <%= if @live_action == :new do %>
       <button
        type="submit" 
       phx-disable-with="Publishing ..."
        class="text-2xl border p-3 border-t-2 border-t-fuchsia-800 hover:bg-fuchsia-00 text-teal-400 mb-4" phx-submit="save"><%= @page_title %>
       </button>
+       <% else %>
+       <button
+       type="submit" 
+      phx-disable-with="Updating ..."
+       class="text-2xl border p-3 border-t-2 border-t-fuchsia-800 hover:bg-fuchsia-00 text-teal-400 mb-4" phx-submit="save"><%= @page_title %>
+      </button>
+      <% end %>
+
       
 
       <.live_component
