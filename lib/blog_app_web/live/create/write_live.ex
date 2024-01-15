@@ -24,9 +24,13 @@ defmodule BlogAppWeb.Create.WriteLive do
 
   @impl true
   defp save_post(socket, :new, %{"post" => post_params}) do
+    
+    %{current_user: user} = socket.assigns
 
     post_params_with_image =
     post_params
+    |> IO.inspect()
+    |> Map.put("user_id", user.id)
     |> Map.put("image", List.first(consume_files(socket)))
 
     post_params_with_image
