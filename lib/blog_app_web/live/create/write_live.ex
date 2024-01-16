@@ -11,7 +11,6 @@ defmodule BlogAppWeb.Create.WriteLive do
      |> allow_upload(:image, accept: ~w(.jpg .jpeg .webp .png), max_entries: 1, auto_upload: true)
      |> assign(:uploaded_files, [])}
 
-    #  |> IO.inspect()
   end
 
   def handle_params(params, _uri, socket) do

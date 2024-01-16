@@ -31,6 +31,11 @@
     x-show="open"
     class="lg:flex lg:flex-row flex-1 space-x-6 justify-end align-middle lg:items-center text-3xl   p-4 flex flex-col items-center flex-wrap"
   >
+          
+    <!-- Search -->
+    <.search placeholder="Seach by title..." search={@search}></.search>
+
+
       <.link navigate={~p"/live/landing/?cat=art"}> Art </.link>
   
       <.link navigate={~p"/live/landing/?cat=science"}> Science </.link>

@@ -13,7 +13,6 @@ defmodule BlogApp.Post do
     field :image, {:array, :string}, default: []
     belongs_to :user, User
 
-
     timestamps(type: :utc_datetime)
   end
 
@@ -41,17 +40,32 @@ defmodule BlogApp.Post do
   end
 
   # this gets all the posts else with the specific category
-  def list_posts(cat) do
-    query = from p in __MODULE__, order_by: [desc: :inserted_at]
+  def list_posts(params, cat) do
+    search_term = get_in(params, ["search"])
+
+    query =
+      from p in __MODULE__,
+        order_by: [desc: :inserted_at],
+        where: ilike(p.title, ^search_term) or ilike(p.cat, ^search_term),
+        where: p.cat == ^cat
 
     query =
       if cat do
-        where(query, [w], w.cat == ^cat)
+        where(query, [p], p.cat == ^cat)
       else
         query
       end
+    |>  Repo.all()
 
-    Repo.all(query)
+
+  end
+
+  def filter_search(params) do
+    search_term = get_in(params, ["search"])
+
+    __MODULE__
+    |> search(search_term)
+    |> Repo.all()
   end
 
   def get_post!(id) do
@@ -64,5 +78,12 @@ defmodule BlogApp.Post do
 
   def change_post(%__MODULE__{} = tariff, attrs \\ %{}) do
     changeset(tariff, attrs)
+  end
+
+  defp search(query, term) do
+    search_term = "%#{term}%"
+
+    from post in query,
+      where: ilike(post.title, ^search_term)
   end
 end

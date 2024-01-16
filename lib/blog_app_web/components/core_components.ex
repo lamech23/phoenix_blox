@@ -443,6 +443,53 @@ defmodule BlogAppWeb.CoreComponents do
 
 
 
+    @doc """
+  Renders a search filter with generic styling.
+  """
+  attr(:search, :string, default: nil)
+  attr(:placeholder, :string, default: "Search...")
+  slot(:inner_block, required: true)
+
+  def search(assigns) do
+    ~H"""
+    <div class="w-full">
+      <div class="relative rounded-md shadow-sm">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <svg
+            class="w-5 h-5 text-gray-400"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            >
+            </path>
+          </svg>
+        </div>
+        <.simple_form phx-change="search" for={} id="search-form" role="search">
+          <input
+            autofocus
+            type="search"
+            name="search"
+            id="search"
+            value={@search}
+            phx-debounce="blur"
+            placeholder={@placeholder}
+            class="block w-full pl-10 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+        </.simple_form>
+      </div>
+    </div>
+    """
+  end
+
+
+
   @doc """
   Renders a page header with title and subtitle.
   """
