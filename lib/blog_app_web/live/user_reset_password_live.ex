@@ -41,6 +41,7 @@ defmodule BlogAppWeb.UserResetPasswordLive do
   def mount(params, _session, socket) do
     socket = assign_user_and_token(socket, params)
 
+
     form_source =
       case socket.assigns do
         %{user: user} ->

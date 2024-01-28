@@ -178,6 +178,8 @@ defmodule BlogAppWeb.UserAuth do
         Accounts.get_user_by_session_token(user_token)
       end
     end)
+    |> attach_current_path_hook()
+
   end
 
   @doc """
@@ -191,6 +193,14 @@ defmodule BlogAppWeb.UserAuth do
     else
       conn
     end
+  end
+
+  defp attach_current_path_hook(socket) do
+    Phoenix.LiveView.attach_hook(socket, :current_path, :handle_params, fn _, uri, socket ->
+      previous_path = socket.assigns[:current_path] || "/"
+      %{path: path} = URI.parse(uri)
+      {:cont, Phoenix.Component.assign(socket, current_path: path, return_to: previous_path)}
+    end)
   end
 
   @doc """

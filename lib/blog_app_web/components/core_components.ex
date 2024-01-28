@@ -447,6 +447,7 @@ defmodule BlogAppWeb.CoreComponents do
   Renders a search filter with generic styling.
   """
   attr(:search, :string, default: nil)
+  attr :rest, :global 
   attr(:placeholder, :string, default: "Search...")
   slot(:inner_block, required: true)
 
@@ -478,9 +479,10 @@ defmodule BlogAppWeb.CoreComponents do
             name="search"
             id="search"
             value={@search}
+            {@rest}
             phx-debounce="blur"
             placeholder={@placeholder}
-            class="block w-full pl-10 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            class=" w-full pl-10 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </.simple_form>
       </div>

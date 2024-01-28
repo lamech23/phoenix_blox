@@ -4,7 +4,7 @@ defmodule BlogApp.Post do
   import Ecto.Query
   @type t :: %__MODULE__{cat: String.t(), desc: String.t(), title: String.t(), image: String.t()}
   alias BlogApp.Repo
-  alias BlogApp.User
+  alias BlogApp.Accounts.User
 
   schema "posts" do
     field :cat, :string
@@ -28,6 +28,7 @@ defmodule BlogApp.Post do
   @spec create(Map.t()) :: {:ok, t} | {:error, Ecto.Changeset.t()}
   def create(params) do
     %__MODULE__{}
+    # |> Ecto.build_assoc(:user)
     |> changeset(params)
     |> Repo.insert()
   end
@@ -45,9 +46,8 @@ defmodule BlogApp.Post do
 
     query =
       from p in __MODULE__,
-        order_by: [desc: :inserted_at],
-        where: ilike(p.title, ^search_term) or ilike(p.cat, ^search_term),
-        where: p.cat == ^cat
+        order_by: [desc: :inserted_at]
+        # where: ilike(p.title, ^search_term) or ilike(p.cat, ^search_term)
 
     query =
       if cat do

@@ -2,7 +2,9 @@ defmodule BlogAppWeb.Create.WriteLive do
   use BlogAppWeb, :live_view
   alias BlogApp.Post
 
-  def mount(_params, _session, socket) do
+  def mount(_params, session, socket) do
+    IO.inspect(socket, label: "Current User")
+
     changeset = Post.change_post(%Post{})
     socket = assign(socket, :form, to_form(changeset))
 
@@ -10,7 +12,6 @@ defmodule BlogAppWeb.Create.WriteLive do
      socket
      |> allow_upload(:image, accept: ~w(.jpg .jpeg .webp .png), max_entries: 1, auto_upload: true)
      |> assign(:uploaded_files, [])}
-
   end
 
   def handle_params(params, _uri, socket) do
@@ -23,14 +24,15 @@ defmodule BlogAppWeb.Create.WriteLive do
 
   @impl true
   defp save_post(socket, :new, %{"post" => post_params}) do
-    
-    %{current_user: user} = socket.assigns
+    # %{current_user: user} = socket.assigns  
+
+    # IO.inspect(socket.assigns[:current_user], label: "Current User")
 
     post_params_with_image =
-    post_params
-    |> IO.inspect()
-    |> Map.put("user_id", user.id)
-    |> Map.put("image", List.first(consume_files(socket)))
+      post_params
+      # |> IO.inspect()
+      # |> Map.put("user_id", user.id)
+      |> Map.put("image", List.first(consume_files(socket)))
 
     post_params_with_image
     |> Map.merge(%{"image" => [post_params_with_image["image"]]})
@@ -49,17 +51,28 @@ defmodule BlogAppWeb.Create.WriteLive do
 
   @impl true
   defp save_post(socket, :edit, %{"post" => post_params}) do
-    posts = socket.assigns.post 
-    case Post.update(posts, post_params ) do
-      {:ok, post } ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Updated successfully")
-         |> push_navigate(to: "/live/landing")}
+    posts = socket.assigns.post
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign_form(socket, changeset)}
-    end
+    post_params_with_image =
+      post_params
+      |> Map.put("image", List.first(consume_files(socket)))
+
+    # Merge the image field into the post_params map
+    post_params_with_image =
+      Map.merge(post_params, %{"image" => [post_params_with_image["image"]]})
+
+    update_post =
+      Post.update(posts, post_params_with_image)
+      |> case do
+        {:ok, _post} ->
+          {:noreply,
+           socket
+           |> put_flash(:info, "Post updated successfully")
+           |> push_navigate(to: ~p"/live/landing")}
+
+        {:error, %Ecto.Changeset{} = changeset} ->
+          {:noreply, assign_form(socket, changeset)}
+      end
   end
 
   defp apply_action(socket, :index, _params) do

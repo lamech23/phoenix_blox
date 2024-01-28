@@ -54,7 +54,9 @@ defmodule BlogApp.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:arc, "~> 0.11.0"},
       {:arc_ecto, "~> 0.11.3"},
-      {:mime, "~> 2.0"}
+      {:mime, "~> 2.0"},
+      {:timex, "~> 3.7"}
+
 
 
       
