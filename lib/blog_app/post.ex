@@ -28,8 +28,8 @@ defmodule BlogApp.Post do
   @spec create(Map.t()) :: {:ok, t} | {:error, Ecto.Changeset.t()}
   def create(params) do
     %__MODULE__{}
-    # |> Ecto.build_assoc(:user)
     |> changeset(params)
+    # |> build_assoc(:user)
     |> Repo.insert()
   end
 

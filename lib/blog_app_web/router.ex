@@ -27,11 +27,11 @@ defmodule BlogAppWeb.Router do
   scope "/live", BlogAppWeb do
     pipe_through [:browser]
 
-    live( "/landing", LandingPage.LandingPageLive, :index)
-    live( "/create", Create.WriteLive, :new)
-    live( "/:id/edit/", Create.WriteLive, :edit)
-    live( "/:id/single", SinglePage.SinglePageLive, :index)
-    live( "/login", Logs.LoginLive, :index)
+    # live( "/landing", LandingPage.LandingPageLive, :index)
+    # live( "/create", Create.WriteLive, :new)
+    # live( "/:id/edit/", Create.WriteLive, :edit)
+    # live( "/:id/single", SinglePage.SinglePageLive, :index)
+    # live( "/login", Logs.LoginLive, :index)
   end
   # Other scopes may use custom stacks.
   # scope "/api", BlogAppWeb do
@@ -71,13 +71,18 @@ defmodule BlogAppWeb.Router do
     post "/users/log_in", UserSessionController, :create
   end
 
-  scope "/", BlogAppWeb do
+  scope "/live", BlogAppWeb do
     pipe_through [:browser, :require_authenticated_user]
 
     live_session :require_authenticated_user,
       on_mount: [{BlogAppWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+      live( "/landing", LandingPage.LandingPageLive, :index)
+      live( "/create", Create.WriteLive, :new)
+      live( "/:id/edit/", Create.WriteLive, :edit)
+      live( "/:id/single", SinglePage.SinglePageLive, :index)
+      live( "/login", Logs.LoginLive, :index)
     end
   end
 

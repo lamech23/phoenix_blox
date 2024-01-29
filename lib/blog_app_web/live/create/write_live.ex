@@ -3,7 +3,6 @@ defmodule BlogAppWeb.Create.WriteLive do
   alias BlogApp.Post
 
   def mount(_params, session, socket) do
-    IO.inspect(socket, label: "Current User")
 
     changeset = Post.change_post(%Post{})
     socket = assign(socket, :form, to_form(changeset))
@@ -24,20 +23,20 @@ defmodule BlogAppWeb.Create.WriteLive do
 
   @impl true
   defp save_post(socket, :new, %{"post" => post_params}) do
-    # %{current_user: user} = socket.assigns  
-
     # IO.inspect(socket.assigns[:current_user], label: "Current User")
+    user = socket.assigns.current_user
 
     post_params_with_image =
       post_params
-      # |> IO.inspect()
-      # |> Map.put("user_id", user.id)
       |> Map.put("image", List.first(consume_files(socket)))
-
-    post_params_with_image
-    |> Map.merge(%{"image" => [post_params_with_image["image"]]})
-    |> Post.create()
-    |> case do
+      |> Map.put("user_id", user.id)
+      
+      post_params_with_image
+      |> Map.merge(%{"image" => [post_params_with_image["image"]]})
+      |> Map.merge(%{"user_id" => post_params_with_image["user_id"]})
+      |> Post.create()
+      |> IO.inspect(label: "userId")
+      |> case do
       {:ok, _post} ->
         {:noreply,
          socket
