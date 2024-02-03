@@ -17,6 +17,8 @@ defmodule BlogAppWeb.Create.WriteLive do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
+
+
   def handle_event("save", post_params, socket) do
     save_post(socket, socket.assigns.live_action, post_params)
   end
@@ -34,14 +36,15 @@ defmodule BlogAppWeb.Create.WriteLive do
       post_params_with_image
       |> Map.merge(%{"image" => [post_params_with_image["image"]]})
       |> Map.merge(%{"user_id" => post_params_with_image["user_id"]})
+      |> IO.inspect(label: "params")
+
       |> Post.create()
-      |> IO.inspect(label: "userId")
       |> case do
       {:ok, _post} ->
         {:noreply,
          socket
          |> put_flash(:info, "post created succesfully")
-         |> push_navigate(to: ~p"/live/landing")}
+         |> push_navigate(to: ~p"/")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
@@ -67,7 +70,7 @@ defmodule BlogAppWeb.Create.WriteLive do
           {:noreply,
            socket
            |> put_flash(:info, "Post updated successfully")
-           |> push_navigate(to: ~p"/live/landing")}
+           |> push_navigate(to: ~p"/")}
 
         {:error, %Ecto.Changeset{} = changeset} ->
           {:noreply, assign_form(socket, changeset)}

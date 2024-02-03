@@ -1,3 +1,4 @@
+
 defmodule BlogApp.Repo.Migrations.CreatePosts do
   use Ecto.Migration
 

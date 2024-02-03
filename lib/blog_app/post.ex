@@ -29,7 +29,6 @@ defmodule BlogApp.Post do
   def create(params) do
     %__MODULE__{}
     |> changeset(params)
-    # |> build_assoc(:user)
     |> Repo.insert()
   end
 
@@ -41,32 +40,37 @@ defmodule BlogApp.Post do
   end
 
   # this gets all the posts else with the specific category
-  def list_posts(params, cat) do
-    search_term = get_in(params, ["search"])
-
-    query =
-      from p in __MODULE__,
-        order_by: [desc: :inserted_at]
-        # where: ilike(p.title, ^search_term) or ilike(p.cat, ^search_term)
-
-    query =
-      if cat do
-        where(query, [p], p.cat == ^cat)
-      else
-        query
-      end
-    |>  Repo.all()
+  
 
 
-  end
+  
+    
+    def list_posts(params, cat) do
+      search_term = get_in(params, ["search"])
+    
+      query =
+        from p in __MODULE__,
+          order_by: [desc: :inserted_at]
+    
+      query =
+        if cat do
+          query = where(query, [p], p.cat == ^cat)
+        else
+          query
+        end
+    
+      query =
+        if search_term do
+           where(query, [p], ilike(p.title, ^"%#{search_term}%") or ilike(p.cat, ^"%#{search_term}%"))
+        else
+          query
+        end
+    
+      Repo.all(query)
+    end
+    
 
-  def filter_search(params) do
-    search_term = get_in(params, ["search"])
-
-    __MODULE__
-    |> search(search_term)
-    |> Repo.all()
-  end
+ 
 
   def get_post!(id) do
     Repo.get!(__MODULE__, id)

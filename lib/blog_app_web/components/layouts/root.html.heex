@@ -17,7 +17,7 @@
   <body class="bg-white  antialiased">
     <section  x-data="{open: true}" class="m-6 lg:flex lg:flex-row flex flex-col justify-between items-center gap-4 lg:px-80 text-teal-800 font-serif">
       <div class="text-3xl flex flex-row justify-between items-center gap-4">
-        <.link navigate={~p"/live/landing"}>
+        <.link navigate={~p"/"}>
         <img src={~s"/images/stew.jpg"} alt="" class=" w-28 h-28 rounded-full">
       </.link>
         <p>Blog</p>
@@ -36,15 +36,15 @@
     <!-- <.search class=" w-1/2" placeholder="Seach by title..." search={@search}></.search> -->
 
 
-      <.link navigate={~p"/live/landing/?cat=art"}> Art </.link>
+      <.link navigate={~p"/?cat=art"}> Art </.link>
   
-      <.link navigate={~p"/live/landing/?cat=science"}> Science </.link>
+      <.link navigate={~p"/?cat=science"}> Science </.link>
   
-      <.link navigate={~p"/live/landing/?cat=technology"}> Technology </.link>
+      <.link navigate={~p"/?cat=technology"}> Technology </.link>
   
-      <.link navigate={~p"/live/landing/?cat=design"}> Design </.link>
+      <.link navigate={~p"/?cat=design"}> Design </.link>
   
-      <.link navigate={~p"/live/landing/?cat=music"}> Music </.link>
+      <.link navigate={~p"/?cat=music"}> Music </.link>
   
   
     

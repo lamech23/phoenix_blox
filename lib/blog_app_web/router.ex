@@ -20,14 +20,14 @@ defmodule BlogAppWeb.Router do
   scope "/", BlogAppWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    # get "/", PageController, :home
   end
 
 
-  scope "/live", BlogAppWeb do
+  scope "/", BlogAppWeb do
     pipe_through [:browser]
 
-    # live( "/landing", LandingPage.LandingPageLive, :index)
+    live( "/", LandingPage.LandingPageLive, :index)
     # live( "/create", Create.WriteLive, :new)
     # live( "/:id/edit/", Create.WriteLive, :edit)
     # live( "/:id/single", SinglePage.SinglePageLive, :index)
@@ -78,7 +78,7 @@ defmodule BlogAppWeb.Router do
       on_mount: [{BlogAppWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
-      live( "/landing", LandingPage.LandingPageLive, :index)
+      # live( "/landing", LandingPage.LandingPageLive, :index)
       live( "/create", Create.WriteLive, :new)
       live( "/:id/edit/", Create.WriteLive, :edit)
       live( "/:id/single", SinglePage.SinglePageLive, :index)
