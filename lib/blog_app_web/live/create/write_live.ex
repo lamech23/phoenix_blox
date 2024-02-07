@@ -25,7 +25,6 @@ defmodule BlogAppWeb.Create.WriteLive do
 
   @impl true
   defp save_post(socket, :new, %{"post" => post_params}) do
-    # IO.inspect(socket.assigns[:current_user], label: "Current User")
     user = socket.assigns.current_user
 
     post_params_with_image =

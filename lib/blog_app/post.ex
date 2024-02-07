@@ -19,7 +19,7 @@ defmodule BlogApp.Post do
   @doc false
   def changeset(post, attrs) do
     post
-    |> cast(attrs, [:title, :desc, :cat, :image])
+    |> cast(attrs, [:title, :desc, :cat, :image, :user_id])
     |> validate_required([:title, :desc, :cat, :image])
     |> validate_length(:desc, min: 10)
     |> validate_length(:title, min: 10)

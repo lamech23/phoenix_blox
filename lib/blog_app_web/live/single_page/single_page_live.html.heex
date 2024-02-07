@@ -33,7 +33,9 @@
             <p>Posted by <strong class="text-red-400">lamech</strong></p>
         </div>
         
-        <div>
+
+        <%=  if @current_user.id == @blog.user_id  do %> 
+         <div>
 
           <.link patch={~p"/live/#{@blog}/edit"} >
                 
@@ -50,6 +52,7 @@
             delete</button>
             <span class="material-symbols-outlined text-teal-600 cursor-pointer">message</span>
         </div>
+        <% end %>
     </div>
     </div>
 
