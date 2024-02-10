@@ -482,7 +482,7 @@ defmodule BlogAppWeb.CoreComponents do
             {@rest}
             phx-debounce="blur"
             placeholder={@placeholder}
-            class=" w-full pl-10 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            class=" w-full pl-10 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-blue-300"
           />
         </.simple_form>
       </div>
