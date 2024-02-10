@@ -3,15 +3,16 @@ defmodule BlogAppWeb.Create.WriteLive do
   alias BlogApp.Post
 
   def mount(_params, session, socket) do
-
     changeset = Post.change_post(%Post{})
     socket = assign(socket, :form, to_form(changeset))
-
+  
     {:ok,
      socket
      |> allow_upload(:image, accept: ~w(.jpg .jpeg .webp .png), max_entries: 1, auto_upload: true)
-     |> assign(:uploaded_files, [])}
+     |> assign(:uploaded_files, [])
+     |> assign(:search, nil)}
   end
+  
 
   def handle_params(params, _uri, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}

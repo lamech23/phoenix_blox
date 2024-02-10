@@ -30,7 +30,7 @@
         <img src={~s"/images/stew.jpg"} class="w-20 h h-20 rounded-full" alt="">
             
         <div>
-            <p>Posted by <strong class="text-red-400">lamech</strong></p>
+            <p>Posted by <strong class="text-red-400"><%= @blog.user.email %></strong></p>
         </div>
         
 
@@ -69,6 +69,7 @@
             
             <p> <%= blogs.title %></p>
             <p class=" w-96  truncate ">  <%= blogs.desc %></p>
+            
             <button>
                 <.link class="border p-3 border-fuchsia-800 border-t-4 hover:bg-fuchsia-800  " navigate={~p"/live/#{blogs.id}/single/?cat=#{blogs.cat}"}>Read More</.link>
             </button>
@@ -92,14 +93,12 @@
 
 <.modal id="modal">
     <div id="modal">
-        <label for="OrderNotes" class="sr-only">Order notes</label>
-      
         <div class="overflow-hidden">
           <textarea
             id="OrderNotes"
             class="w-full resize-none border-x-0 border-t-0 border-gray-200 px-0 align-top sm:text-sm"
             rows="4"
-            placeholder="Enter any additional order notes..."
+            placeholder="Add comment..."
           ></textarea>
       
           <div class="flex items-center justify-end gap-2 py-3">

@@ -74,6 +74,7 @@ defmodule BlogApp.Post do
 
   def get_post!(id) do
     Repo.get!(__MODULE__, id)
+    |>  Repo.preload(:user)
   end
 
   def delete(post) do
