@@ -1,9 +1,11 @@
 defmodule BlogApp.Comments.Comment do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
   alias BlogApp.Accounts.User
   alias BlogApp.Post
   alias BlogApp.Repo
+
 
 
   @type t :: %__MODULE__{
@@ -35,6 +37,18 @@ defmodule BlogApp.Comments.Comment do
     |> Repo.insert()
   end
 
+
+  def get_comments_for_post(post_id) do
+    from(c in __MODULE__, where: c.post_id == ^post_id)
+    |> Repo.all()
+    |> Repo.preload(:user)
+
+
+    
+  end
+  
+  
+  
   def change_comment(%__MODULE__{} = comment, attrs \\ %{}) do
     changeset(comment, attrs)
   end
