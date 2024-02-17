@@ -3,6 +3,8 @@ defmodule BlogApp.Comments.Comment do
   import Ecto.Changeset
   alias BlogApp.Accounts.User
   alias BlogApp.Post
+  alias BlogApp.Repo
+
 
   @type t :: %__MODULE__{
           title: String.t(),
@@ -31,5 +33,9 @@ defmodule BlogApp.Comments.Comment do
     %__MODULE__{}
     |> changeset(params)
     |> Repo.insert()
+  end
+
+  def change_comment(%__MODULE__{} = comment, attrs \\ %{}) do
+    changeset(comment, attrs)
   end
 end

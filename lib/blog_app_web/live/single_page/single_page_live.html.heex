@@ -87,14 +87,28 @@
 
 
 <.modal id="modal">
+
+  <.simple_form
+  :let={f}
+  for={@form}
+  id="comment_form"
+  phx-submit="save_comment"
+
+
+  
+
+  >
+
     <div id="modal">
         <div class="overflow-hidden">
-          <textarea
-            id="OrderNotes"
-            class="w-full resize-none border-x-0 border-t-0 border-gray-200 px-0 align-top sm:text-sm"
-            rows="4"
-            placeholder="Add comment..."
-          ></textarea>
+       
+          <.input 
+          field={f[:title]}
+            type="textarea"
+            class="shadow-lg block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            id="large-input "
+            placeholder=" title"
+          />
       
           <div class="flex items-center justify-end gap-2 py-3">
             <button
@@ -104,15 +118,13 @@
               Clear
             </button>
       
-            <button
-              type="button"
-              class="rounded bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700"
-            >
-              Add
-            </button>
+       
+
+            <.button phx-disable-with = " Adding..."> Add </.button>
           </div>
         </div>
       </div>
+      </.simple_form>
 
 </.modal>
   
