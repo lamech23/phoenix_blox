@@ -95,6 +95,7 @@ defmodule BlogAppWeb.Router do
       on_mount: [{BlogAppWeb.UserAuth, :mount_current_user}] do
       live "/users/confirm/:token", UserConfirmationLive, :edit
       live "/users/confirm", UserConfirmationInstructionsLive, :new
+      
     end
   end
 end

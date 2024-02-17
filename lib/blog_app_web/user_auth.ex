@@ -81,7 +81,7 @@ defmodule BlogAppWeb.UserAuth do
     conn
     |> renew_session()
     |> delete_resp_cookie(@remember_me_cookie)
-    |> redirect(to: ~p"/live/landing")
+    |> redirect(to: ~p"/")
   end
 
   @doc """

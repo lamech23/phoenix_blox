@@ -5,6 +5,7 @@ defmodule BlogApp.Post do
   @type t :: %__MODULE__{cat: String.t(), desc: String.t(), title: String.t(), image: String.t()}
   alias BlogApp.Repo
   alias BlogApp.Accounts.User
+  alias BlogApp.Comments.Comment
 
   schema "posts" do
     field :cat, :string
@@ -12,6 +13,7 @@ defmodule BlogApp.Post do
     field :title, :string
     field :image, {:array, :string}, default: []
     belongs_to :user, User
+    has_many :comment, Comment
 
     timestamps(type: :utc_datetime)
   end
@@ -41,10 +43,6 @@ defmodule BlogApp.Post do
 
   # this gets all the posts else with the specific category
   
-
-
-  
-    
     def list_posts(params, cat) do
       search_term = get_in(params, ["search"])
     

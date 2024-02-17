@@ -36,11 +36,11 @@ defmodule BlogAppWeb.Create.WriteLive do
       post_params_with_image
       |> Map.merge(%{"image" => [post_params_with_image["image"]]})
       |> Map.merge(%{"user_id" => post_params_with_image["user_id"]})
-      |> IO.inspect(label: "params")
 
       |> Post.create()
       |> case do
       {:ok, _post} ->
+        
         {:noreply,
          socket
          |> put_flash(:info, "post created succesfully")

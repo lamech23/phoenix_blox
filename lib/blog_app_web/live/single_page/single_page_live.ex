@@ -4,9 +4,8 @@ defmodule BlogAppWeb.SinglePage.SinglePageLive do
 
   def mount(params, _session, socket) do
     post = Post.get_post!(params["id"])
-    |> IO.inspect()
+    IO.inspect(post)
     related_post = Post.list_posts(params, params["cat"])
-
 
     {:ok, assign(socket, blog: post, related: related_post, search: nil )}
   end
@@ -17,7 +16,7 @@ defmodule BlogAppWeb.SinglePage.SinglePageLive do
 
     {:noreply,
      socket
-     |> redirect(to: "/live/landing")
+     |> redirect(to: "/")
      |> put_flash(:info, "Post deleted successfully")}
   end
 end
