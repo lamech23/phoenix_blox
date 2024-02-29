@@ -3,16 +3,16 @@ defmodule BlogAppWeb.Create.WriteLive do
   alias BlogApp.Post
 
   def mount(_params, session, socket) do
+    
     changeset = Post.change_post(%Post{})
     socket = assign(socket, :form, to_form(changeset))
-  
+
     {:ok,
      socket
      |> allow_upload(:image, accept: ~w(.jpg .jpeg .webp .png), max_entries: 1, auto_upload: true)
      |> assign(:uploaded_files, [])
      |> assign(:search, nil)}
   end
-  
 
   def handle_params(params, _uri, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
@@ -32,19 +32,20 @@ defmodule BlogAppWeb.Create.WriteLive do
       post_params
       |> Map.put("image", List.first(consume_files(socket)))
       |> Map.put("user_id", user.id)
-      
-      post_params_with_image
-      |> Map.merge(%{"image" => [post_params_with_image["image"]]})
-      |> Map.merge(%{"user_id" => post_params_with_image["user_id"]})
 
-      |> Post.create()
-      |> case do
-      {:ok, _post} ->
-        
-        {:noreply,
-         socket
-         |> put_flash(:info, "post created succesfully")
-         |> push_navigate(to: ~p"/")}
+    post_params_with_image
+    |> Map.merge(%{"image" => [post_params_with_image["image"]]})
+    |> Map.merge(%{"user_id" => post_params_with_image["user_id"]})
+    |> Post.create()
+    |> case do
+      {:ok, post} ->
+        socket =
+          socket
+          |> put_flash(:info, "post created succesfully")
+          |> push_navigate(to: ~p"/")
+
+        Phoenix.PubSub.broadcast(BlogApp.PubSub, "posts", {:new, Map.put(post, :user, user)})
+        {:noreply, socket}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}

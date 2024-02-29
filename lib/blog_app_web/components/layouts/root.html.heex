@@ -22,20 +22,20 @@
       </.link>
         <p>Blog</p>
         
+        
         <div class=" lg:hidden  ">
         <span @click ="open = !open" type="button" class="material-symbols-outlined  cursor-pointer "> reorder </span>
       </div>
+      
       </div>
   
     <ul
     x-show="open"
-    class="lg:flex lg:flex-row flex-1 space-x-6 justify-end align-middle lg:items-center text-3xl   p-4 flex flex-col items-center flex-wrap"
+    class="lg:flex lg:flex-row  flex-1 space-x-6 justify-end align-middle lg:items-center text-3xl   p-4 flex flex-col items-center flex-wrap"
   >
           
     <!-- Search -->
-     <.search class=" w-1/2"
-     
-      placeholder="Seach by title..." search={@search}></.search>
+    <.search class=" w-1/2"  placeholder="Seach by title..." search={@search}></.search>
 
       <.link navigate={~p"/?cat=art"}> Art </.link>
   
