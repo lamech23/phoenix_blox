@@ -22,6 +22,31 @@
       </div>
       <%= end %>
         
+      
+        <div class="flex flex-row items-center justify-center space-x-10 ">
+          <%= if @page.page_number > 1 do %>
+          <div class="border p-2 rounded-lg text-white bg-teal-500 hover:bg-teal-800 ">
+            <%= link("Prev", to: "/?page=#{@page.page_number - 1}") %>
+
+          </div>
+
+          <% end %>
+          <div style="font-size: 16px; color: #333;">
+            <%= @page.page_number %> / <%= @page.total_pages %>
+          </div>
+          
+          <div class="border p-2 rounded-lg text-white bg-teal-500 hover:bg-teal-800 ">
+
+          <%= if @page.page_number < @page.total_pages do %>
+
+
+          <%= link("Next", to: "/?page=#{@page.page_number + 1}") %>
+
+          <% end %>
+          </div>
+      
+       
+        </div>
     </div>
   </section>
   

@@ -19,7 +19,7 @@ defmodule BlogApp.MixProject do
   def application do
     [
       mod: {BlogApp.Application, []},
-      extra_applications: [:logger, :runtime_tools, :arc, :arc_ecto, :mime]
+      extra_applications: [:logger, :runtime_tools, :arc, :arc_ecto, :mime, :scrivener_ecto]
     ]
   end
 
@@ -55,8 +55,8 @@ defmodule BlogApp.MixProject do
       {:arc, "~> 0.11.0"},
       {:arc_ecto, "~> 0.11.3"},
       {:mime, "~> 2.0"},
-      {:timex, "~> 3.7"}
-
+      {:timex, "~> 3.7"},
+      {:scrivener_ecto, "~> 2.7"}
 
 
       

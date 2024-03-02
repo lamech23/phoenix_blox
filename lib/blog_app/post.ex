@@ -44,12 +44,12 @@ defmodule BlogApp.Post do
   # this gets all the posts else with the specific category
   
     def list_posts(params, cat) do
-      search_term = get_in(params, ["search"])
-    
+      
       query =
-        from p in __MODULE__,
-          order_by: [desc: :inserted_at]
-    
+      from p in __MODULE__,
+      order_by: [desc: :inserted_at]
+      
+      search_term = get_in(params, ["search"])
       query =
         if cat do
           query = where(query, [p], p.cat == ^cat)
