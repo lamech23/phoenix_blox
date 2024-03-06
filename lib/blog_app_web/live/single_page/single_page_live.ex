@@ -5,6 +5,10 @@ defmodule BlogAppWeb.SinglePage.SinglePageLive do
 
   def mount(params, _session, socket) do
     post = Post.get_post!(params["id"])
+    # time_diff = Timex.diff(DateTime.utc_now(), post.inserted_at)
+    {:ok, relative_time} = Timex.format(post.updated_at, "{relative}", :relative)
+    post = Map.put(post, :relative, relative_time)
+    
     related_post = Post.list_posts(params, params["cat"])
     comments = Comment.get_comments_for_post(params["id"])
 
