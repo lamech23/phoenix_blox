@@ -216,7 +216,7 @@
                 <%= if @blog.id==blogs.id do %>
                     <% else %>
 
-                        <img src={blogs.image} class="w-96" alt="">
+                        <img src={blogs.image |> List.first} class="w-96" alt="">
 
                         <p>
                             <%= blogs.title %>
