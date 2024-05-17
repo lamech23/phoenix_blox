@@ -42,37 +42,38 @@ defmodule BlogApp.Post do
   end
 
   # this gets all the posts else with the specific category
-  
-    def list_posts(params, cat) do
-      
-      query =
-      from p in __MODULE__,
-      order_by: [desc: :inserted_at]
-      
-      search_term = get_in(params, ["search"])
-      query =
-        if cat do
-          query = where(query, [p], p.cat == ^cat)
-        else
-          query
-        end
-    
-      query =
-        if search_term do
-           where(query, [p], ilike(p.title, ^"%#{search_term}%") or ilike(p.cat, ^"%#{search_term}%"))
-        else
-          query
-        end
-    
-      Repo.all(query)
-    end
-    
 
- 
+  def list_posts(params) do
+    cat = params["cat"]
+
+    search_term = get_in(params, ["search"])
+
+    query =
+      from p in __MODULE__,
+        order_by: [desc: :inserted_at]
+
+    query =
+      if cat do
+        where(query, [p], p.cat == ^cat)
+      else
+        query
+      end
+
+    query =
+      if search_term do
+        where(
+          query,
+          [p],
+          ilike(p.title, ^"%#{search_term}%") or ilike(p.cat, ^"%#{search_term}%")
+        )
+      else
+        query
+      end
+  end
 
   def get_post!(id) do
     Repo.get!(__MODULE__, id)
-    |>  Repo.preload(:user)
+    |> Repo.preload(:user)
   end
 
   def delete(post) do

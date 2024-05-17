@@ -2,7 +2,7 @@ defmodule BlogAppWeb.Create.WriteLive do
   use BlogAppWeb, :live_view
   alias BlogApp.Post
 
-  def mount(_params, session, socket) do
+  def mount(_params, _session, socket) do
     
     changeset = Post.change_post(%Post{})
     socket = assign(socket, :form, to_form(changeset))
@@ -123,7 +123,7 @@ defmodule BlogAppWeb.Create.WriteLive do
     socket
     |> assign(:form, to_form(changeset))
   end
-
+  |> IO.inspect
   defp consume_files(socket) do
     uploaded_files =
       consume_uploaded_entries(socket, :image, fn %{path: path}, _entry ->

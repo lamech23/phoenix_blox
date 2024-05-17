@@ -5,14 +5,25 @@ defmodule BlogAppWeb.LandingPage.LandingPageLive do
   import Phoenix.HTML.Link
 
 
+
   def mount(params, _session, socket) do
     Phoenix.PubSub.subscribe(BlogApp.PubSub, "posts")
-    page =
-     Post
-      |> Repo.paginate(params)
+    {:ok, socket }
+ 
 
-    {:ok, assign(socket, posts: page.entries, page: page, search: nil ) }
   end
+
+
+   def handle_params(params, _uri, socket )do
+    params |> IO.inspect()
+
+    page =
+    Post.list_posts(params )
+     |> Repo.paginate(params)
+     
+    
+     {:noreply, assign(socket, posts: page.entries, page: page, search: nil ) }
+    end
 
 
   @impl true
