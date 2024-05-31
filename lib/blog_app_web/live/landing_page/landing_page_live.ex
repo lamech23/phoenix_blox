@@ -4,27 +4,18 @@ defmodule BlogAppWeb.LandingPage.LandingPageLive do
   alias BlogApp.Repo
   import Phoenix.HTML.Link
 
-
-
   def mount(params, _session, socket) do
     Phoenix.PubSub.subscribe(BlogApp.PubSub, "posts")
-    {:ok, socket }
- 
-
+    {:ok, socket}
   end
 
-
-   def handle_params(params, _uri, socket )do
-    params |> IO.inspect()
-
+  def handle_params(params, _uri, socket) do
     page =
-    Post.list_posts(params )
-     |> Repo.paginate(params)
-     
-    
-     {:noreply, assign(socket, posts: page.entries, page: page, search: nil ) }
-    end
+      Post.list_posts(params)
+      |> Repo.paginate(params)
 
+    {:noreply, assign(socket, posts: page.entries, page: page, search: nil)}
+  end
 
   @impl true
   def handle_info({:new, post}, socket) do
@@ -32,8 +23,7 @@ defmodule BlogAppWeb.LandingPage.LandingPageLive do
     socket =
       socket
       |> put_flash(:info, "#{post.user.email}, just posted")
+
     {:noreply, assign(socket, posts: posts, search: nil)}
   end
-
-
 end
